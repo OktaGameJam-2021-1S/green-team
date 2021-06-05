@@ -18,11 +18,13 @@ public class BuildingNetworkSync : MonoBehaviour
     public int Width => _width;
 
     private List<GameObject> _damageCreated;
+    private List<GameObject> _plantCreated;
     private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _damageCreated = new List<GameObject>();
+        _plantCreated = new List<GameObject>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     
@@ -63,6 +65,11 @@ public class BuildingNetworkSync : MonoBehaviour
     public int DamageTaken()
     {
         return _damageCreated.Count;
+    }
+
+    public int PlantCount()
+    {
+        return _plantCreated.Count;
     }
 
     public void DealDamage()

@@ -15,6 +15,8 @@ public enum ChallengeType
 {
     Demolish = 0,
     Naturalize = 1,
+    Damage = 2,
+    GrowPlant = 3,
 }
 
 public enum ComparisonType

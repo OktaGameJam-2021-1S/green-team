@@ -10,6 +10,11 @@ public class ChallengeController : MonoBehaviour
     private bool CheckAmount(Challenge challenge)
     {
         int progression = GetChallengeProgression((ChallengeType)challenge.ChallengeType);
+
+
+        if (progression == -1)
+            return false;
+
         switch ((ComparisonType) challenge.ComparisonType)
         {
             case ComparisonType.Equal:
@@ -29,11 +34,13 @@ public class ChallengeController : MonoBehaviour
         switch (_type)
         {
             case ChallengeType.Demolish:
-                // Update to get from the GameController the amount of demolished buildings.
-                return 1;
+                return GetDemolishedBuildings();
             case ChallengeType.Naturalize:
-                // Update to get from the GameController the amount of naturalized buildings.
-                return 0;
+                return GetNaturalizedBuildings();
+            case ChallengeType.Damage:
+                return GetDamageDealt();
+            case ChallengeType.GrowPlant:
+                return GetPlantCount();
             default:
                 return -1;
         }
@@ -54,4 +61,45 @@ public class ChallengeController : MonoBehaviour
         return demolishedCount;
     }
 
+    private int GetDamageDealt()
+    {
+        int demolishedCount = 0;
+        BuildingNetworkSync pBuilding;
+        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        for (int i = 0; i < lBuildings.Count; i++)
+        {
+            pBuilding = lBuildings[i];
+            demolishedCount += pBuilding.DamageTaken();
+        }
+
+        return demolishedCount;
+    }
+
+    private int GetNaturalizedBuildings()
+    {
+        int naturalizedBuildings = 0;
+        BuildingNetworkSync pBuilding;
+        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        for (int i = 0; i < lBuildings.Count; i++)
+        {
+            pBuilding = lBuildings[i];
+            naturalizedBuildings += (pBuilding.PlantCount() > 10) ? 1 : 0;
+        }
+
+        return naturalizedBuildings;
+    }
+
+    private int GetPlantCount()
+    {
+        int plantCount = 0;
+        BuildingNetworkSync pBuilding;
+        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        for (int i = 0; i < lBuildings.Count; i++)
+        {
+            pBuilding = lBuildings[i];
+            plantCount += pBuilding.PlantCount();
+        }
+
+        return plantCount;
+    }
 }
