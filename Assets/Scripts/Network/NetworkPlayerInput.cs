@@ -60,20 +60,9 @@ public class NetworkPlayerInput : MonoBehaviour
 
     private void Use()
     {
-        if (_player.Movement.VerticalPosition != LayerHeight.Sidewalk) return;
-        var building = _controller.Buildings.Find(building => {
-            if (building.transform.position.x < _player.transform.position.x)
-            {
-                if (building.transform.position.x + building.Width > _player.transform.position.x)
-                {
-                    return true;   
-                }
-            }
-            return false;
-        });
-        if (building)
+        if (_player.HasTool && _controller.Tools.ContainsKey(_player.ToolId))
         {
-            building.DealDamage();
+            _controller.Tools[_player.ToolId].UseTool(_player.Movement);
         }
     }
 

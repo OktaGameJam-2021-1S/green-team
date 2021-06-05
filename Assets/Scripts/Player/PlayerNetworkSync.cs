@@ -14,6 +14,12 @@ public class PlayerNetworkSync : MonoBehaviour
     private PlayerTool _tool;
     public PlayerTool Tool => _tool;
 
+    private bool _hasTool;
+    public bool HasTool => _hasTool;
+
+    private int _toolId;
+    public int ToolId => _toolId;
+
     private GameController _controller;
 
     private void Awake()
@@ -28,6 +34,10 @@ public class PlayerNetworkSync : MonoBehaviour
         _id = network.id;
         _movement.MoveHorizontal(network.x);
         _movement.MoveVertical(network.y);
+        
+        _toolId = network.toolId;
+        _hasTool = network.hasTool;
+
         if (!network.hasTool)
         {
             _tool.DropTool();

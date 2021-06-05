@@ -16,7 +16,8 @@ public class ToolSprite : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer = default;
 
-    private Tool _currentTool;
+    private Tool _type;
+    public Tool Type => _type;
 
     private void Awake()
     {
@@ -25,12 +26,12 @@ public class ToolSprite : MonoBehaviour
     
     public void Construct(Tool tool)
     {
-        _currentTool = tool;
+        _type = tool;
         UpdateSprite();
     }
 
     private void UpdateSprite()
     {
-        _spriteRenderer.sprite = _toolSprites[_currentTool];
+        _spriteRenderer.sprite = _toolSprites[_type];
     }
 }
