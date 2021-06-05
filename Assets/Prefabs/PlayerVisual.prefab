@@ -280,6 +280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1bf33b4304afd46a053801c0b18e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 7591981968188516082}
+  - {fileID: 7325320197453205669}
+  color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &3133546733018763992
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,8 +427,8 @@ MonoBehaviour:
   - {fileID: 5951671615490461435}
   - {fileID: 7396567067745914908}
   m_Bounds:
-    m_Center: {x: -0.084199905, y: 0.08205652, z: 0}
-    m_Extent: {x: 3.0019507, y: 3.7379425, z: 0}
+    m_Center: {x: -0.084200144, y: 0.08205652, z: 0}
+    m_Extent: {x: 3.0019507, y: 3.7379432, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 0
 --- !u!95 &7214259883062487300
