@@ -61,13 +61,20 @@ public class PlayerInput : MonoBehaviour
     {
         if (_sync == null) _sync = FindObjectOfType<PlayerNetworkSync>();
         if (_movement == null) _movement = FindObjectOfType<PlayerMovement>();
-        
+
         _sync.Sync(new PlayerNetwork()
         {
             x = _sync.transform.position.x + (_horizontal * _moveSpeed * Time.deltaTime),
-            y = _movement.VerticalPosition + _vertical,
+            y = (int)(_movement.VerticalPosition + _vertical),
             tool = 1
         });
+
+        if (_use)
+        {
+            var pBuilding = FindObjectOfType<BuildingNetworkSync>();
+            pBuilding.TakeDamage();
+        }
+
     }
 
 }

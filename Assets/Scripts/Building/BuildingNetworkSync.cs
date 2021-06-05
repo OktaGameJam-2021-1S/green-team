@@ -35,14 +35,20 @@ public class BuildingNetworkSync : MonoBehaviour
 
         while (network.damage > _damageCreated.Count)
         {
-            var damage = Instantiate(_damagePrefab, transform);
-            damage.transform.localPosition = new Vector3(
-                Random.Range(_damageOffset, network.width - _damageOffset),
-                Random.Range(_damageOffset, network.height - _damageOffset),
-                0f
-            );
-            _damageCreated.Add(damage);
+            TakeDamage();
         }
+    }
+
+
+    public void TakeDamage()
+    {
+        var damage = Instantiate(_damagePrefab, transform);
+        damage.transform.localPosition = new Vector3(
+            Random.Range(_damageOffset, _spriteRenderer.transform.localScale.x - _damageOffset),
+            Random.Range(_damageOffset, _spriteRenderer.transform.localScale.y - _damageOffset),
+            0f
+        );
+        _damageCreated.Add(damage);
     }
 
 }

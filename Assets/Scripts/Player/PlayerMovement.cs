@@ -5,13 +5,24 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     
+    public enum LayerHeight
+    {
+        Street = 0,
+        Sidewalk = 1,
+        Building = 2,
+        TopBuilding1 = 3,
+        TopBuilding2 = 4,
+    }
+
     private float _horizontalPosition;
-    private int _verticalPosition;
-    public int VerticalPosition => _verticalPosition;
+    private LayerHeight _verticalPosition;
+
+    [SerializeField]
+    public LayerHeight VerticalPosition => _verticalPosition;
 
     private void Awake()
     {
-        _verticalPosition = 1;
+        _verticalPosition = LayerHeight.Sidewalk;
     }
 
     public void MoveHorizontal(float x)
@@ -22,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveVertical(int y)
     {
-        _verticalPosition = y;
-        if (_verticalPosition > 2) _verticalPosition = 2;
-        if (_verticalPosition < 0) _verticalPosition = 0;
+        _verticalPosition = (LayerHeight) y;
+        if ((int)_verticalPosition > (int)LayerHeight.TopBuilding2) _verticalPosition = LayerHeight.TopBuilding2;
+        if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
         UpdatePosition();
     }
 
@@ -33,11 +44,21 @@ public class PlayerMovement : MonoBehaviour
         float yPos = 0f;
         switch (_verticalPosition)
         {
-            case 1:
-                yPos = -2.5f;
+            // The building height is different per building
+            case LayerHeight.TopBuilding2:
+                yPos = 2f;
                 break;
-            case 0:
-                yPos = -4f;
+            case LayerHeight.TopBuilding1:
+                yPos = 1f;
+                break;
+            case LayerHeight.Building:
+                yPos = 0f;
+                break;
+            case LayerHeight.Sidewalk:
+                yPos = -1.20f;
+                break;
+            case LayerHeight.Street:
+                yPos = -2.30f;
                 break;
         }
 
