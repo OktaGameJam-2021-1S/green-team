@@ -5,39 +5,27 @@ using UnityEngine;
 public class PlayerTool : MonoBehaviour
 {
 
-    public enum Tool
-    {
-        None,
-        Hammer,
-        Paint,
-        Seed
-    }
-
-    [SerializeField] private SpriteRenderer _toolRenderer = default;
-    [SerializeField] private GenericDictionary<Tool, Sprite> _toolSprites = default;
-
-    private Tool _currentTool;
+    public bool HasTool { get; private set; }
+    private Transform _currentTool;
 
     private void Awake()
     {
         DropTool();
     }
     
-    public void HoldTool(Tool tool)
+    public void HoldTool(Transform tool)
     {
         _currentTool = tool;
-        UpdateSprite();
+        _currentTool.parent = transform;
+        _currentTool.localPosition = Vector3.zero;
+        HasTool = true;
     }
 
     public void DropTool()
     {
-        _currentTool = Tool.None;
-        UpdateSprite();
-    }
-
-    private void UpdateSprite()
-    {
-        _toolRenderer.sprite = _toolSprites[_currentTool];
+        if (_currentTool) _currentTool.parent = null;
+        _currentTool = null;
+        HasTool = false;
     }
 
 }

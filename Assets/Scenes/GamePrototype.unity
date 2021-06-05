@@ -507,6 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 116803591267303411, guid: 32ba0d8d1217ed64b8e407611c417113, type: 3}
   _buildingPrefab: {fileID: 3497578864218232454, guid: f31829d526f2be944aadb5aaafad5578, type: 3}
+  _toolPrefab: {fileID: 7876688375490564836, guid: 3088c64068431954caad3aa5732edd58, type: 3}
 --- !u!1 &1458364082
 GameObject:
   m_ObjectHideFlags: 0

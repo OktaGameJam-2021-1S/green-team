@@ -30,7 +30,7 @@ public class NetworkController : MonoBehaviour
         _playerInput = GetComponent<NetworkPlayerInput>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         Debug.Log ($"start {_url}");
         _connected = false;
@@ -103,6 +103,21 @@ public class NetworkController : MonoBehaviour
     public virtual void SendDamageBuilding(DamageBuildingNetwork damageBuildingNetwork)
     {
         _socket.Emit ("player_damage_building", Newtonsoft.Json.JsonConvert.SerializeObject(damageBuildingNetwork));
+    }
+
+    public virtual void SendSeedBuilding(SeedBuildingNetwork seedBuildingNetwork)
+    {
+        _socket.Emit ("player_seed_building", Newtonsoft.Json.JsonConvert.SerializeObject(seedBuildingNetwork));
+    }
+
+    public virtual void SendPickUpTool(PickUpToolNetwork pickUpToolNetwork)
+    {
+        _socket.Emit ("player_pick_up_tool", Newtonsoft.Json.JsonConvert.SerializeObject(pickUpToolNetwork));
+    }
+
+    public virtual void SendDropTool(DropToolNetwork dropToolNetwork)
+    {
+        _socket.Emit ("player_drop_tool");
     }
 
     public virtual void SendInput(PlayerInputNetwork inputNetwork)

@@ -461,7 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4c97b6faef0d7498eb52b49ec1bc31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
 --- !u!114 &1255917456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _url: http://localhost:3000
-  tool: 3
+  tool: 0
 --- !u!114 &1255917458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 116803591267303411, guid: 32ba0d8d1217ed64b8e407611c417113, type: 3}
   _buildingPrefab: {fileID: 3497578864218232454, guid: f31829d526f2be944aadb5aaafad5578, type: 3}
+  _toolPrefab: {fileID: 7876688375490564836, guid: 3088c64068431954caad3aa5732edd58, type: 3}
 --- !u!114 &1431779835
 MonoBehaviour:
   m_ObjectHideFlags: 0

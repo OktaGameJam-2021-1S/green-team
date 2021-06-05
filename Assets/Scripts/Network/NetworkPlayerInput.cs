@@ -13,7 +13,7 @@ public class NetworkPlayerInput : MonoBehaviour
     private int _lastVertical;
 
     private GameController _controller;
-    [SerializeField] private Transform _player;
+    private PlayerNetworkSync _player;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class NetworkPlayerInput : MonoBehaviour
     {
         if (_player == null && _controller.Players.ContainsKey(_playerId))
         {
-            _player = _controller.Players[_playerId].transform;
+            _player = _controller.Players[_playerId];
         }
 
         _horizontal = (int) Input.GetAxisRaw("Horizontal");
@@ -50,11 +50,17 @@ public class NetworkPlayerInput : MonoBehaviour
             Use();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PickTool();
+        }
+
         SendInput();
     }
 
     private void Use()
     {
+        if (_player.Movement.VerticalPosition != LayerHeight.Sidewalk) return;
         var building = _controller.Buildings.Find(building => {
             if (building.transform.position.x < _player.transform.position.x)
             {
@@ -69,6 +75,31 @@ public class NetworkPlayerInput : MonoBehaviour
         {
             building.DealDamage();
         }
+    }
+
+    private void PickTool()
+    {
+        if (_player.Tool.HasTool)
+        {
+            DropTool();
+            return;
+        }
+
+        foreach (var toolKeyPair in _controller.Tools)
+        {
+            var toolSync = toolKeyPair.Value;
+            if (toolSync.Movement.VerticalPosition != _player.Movement.VerticalPosition) continue;
+            if (Vector3.Distance(toolSync.transform.position, _player.transform.position) < .5f)
+            {
+                toolSync.PickUpTool();
+                break;
+            }
+        }
+    }
+
+    public void DropTool()
+    {
+        NetworkController.Instance.SendDropTool(new DropToolNetwork());
     }
 
     private void SendInput()

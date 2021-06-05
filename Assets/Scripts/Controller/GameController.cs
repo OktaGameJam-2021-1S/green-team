@@ -7,27 +7,19 @@ public class GameController : MonoBehaviour
     
     [SerializeField] private PlayerNetworkSync _playerPrefab = default;
     [SerializeField] private BuildingNetworkSync _buildingPrefab = default;
+    [SerializeField] private ToolNetworkSync _toolPrefab = default;
 
     private bool _isFirstGameState;
     private Dictionary<int, PlayerNetworkSync> _players;
     private Dictionary<int, BuildingNetworkSync> _buildings;
+    private Dictionary<int, ToolNetworkSync> _tools;
 
     public static GameController Instance { get; private set; }
 
     private GameStateNetwork _lastState;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-        Instance = this;
-
-
-        _isFirstGameState = true;
-        _players = new Dictionary<int, PlayerNetworkSync>();
-        _buildings = new Dictionary<int, BuildingNetworkSync>();
-    }
-
     public Dictionary<int, PlayerNetworkSync> Players => _players;
+    public Dictionary<int, ToolNetworkSync> Tools => _tools;
     public List<BuildingNetworkSync> Buildings
     {
         get
@@ -36,6 +28,17 @@ public class GameController : MonoBehaviour
             items.AddRange(_buildings.Values);
             return items;
         }
+    }
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        Instance = this;
+
+        _isFirstGameState = true;
+        _players = new Dictionary<int, PlayerNetworkSync>();
+        _buildings = new Dictionary<int, BuildingNetworkSync>();
+        _tools = new Dictionary<int, ToolNetworkSync>();
     }
 
     private void Start()
@@ -79,6 +82,21 @@ public class GameController : MonoBehaviour
                 buildingData = _buildings[building.id];
             }
             buildingData.Sync(building);
+        }
+        
+        foreach (var tool in _lastState.tools)
+        {
+            ToolNetworkSync toolData = null;
+            if (!_tools.ContainsKey(tool.id))
+            {
+                toolData = Instantiate(_toolPrefab);
+                _tools.Add(tool.id, toolData);
+            }
+            else
+            {
+                toolData = _tools[tool.id];
+            }
+            toolData.Sync(tool);
         }
     }
 

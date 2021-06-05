@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LocalNetworkController : NetworkController
 {
-    [SerializeField] PlayerTool.Tool tool;
+    [SerializeField] ToolSprite.Tool tool;
     private GameStateNetwork _gameState;
 
     protected override void Awake()
@@ -17,7 +17,8 @@ public class LocalNetworkController : NetworkController
             id = 0,
             x = 0,
             y = 0,
-            tool = (int)tool
+            toolId = 0,
+            hasTool = true
         }); ;
 
         _gameState.buildings = new List<BuildingNetwork>();
@@ -39,6 +40,22 @@ public class LocalNetworkController : NetworkController
             });
             x += width;
         }
+
+        _gameState.tools = new List<ToolNetwork>();
+        _gameState.tools.Add(new ToolNetwork()
+        {
+            id = 0,
+            x = 1,
+            y = 1,
+            type = (int) tool,
+            uses = 2,
+            isHold = true
+        });
+    }
+
+    protected override void Start()
+    {
+
     }
 
     public override void SendInput(PlayerInputNetwork inputNetwork)
@@ -46,16 +63,26 @@ public class LocalNetworkController : NetworkController
         _gameState.players[0].x += 5f * inputNetwork.horizontal * Time.deltaTime;
         _gameState.players[0].y += inputNetwork.vertical;
 
-        if (inputNetwork.use && _gameState.players[0].tool == (int)PlayerTool.Tool.Hammer)
-        {
-            _gameState.buildings[0].damage += 1;
-        }
+        // if (inputNetwork.use && tool == ToolSprite.Tool.Hammer)
+        // {
+        //     _gameState.buildings[0].damage += 1;
+        // }
 
-        if (inputNetwork.use && _gameState.players[0].tool == (int)PlayerTool.Tool.Seed)
-        {
-            _gameState.buildings[0].plant += 1;
-        }
+        // if (inputNetwork.use && tool == ToolSprite.Tool.Seed)
+        // {
+        //     _gameState.buildings[0].plant += 1;
+        // }
 
+    }
+
+    public override void SendDamageBuilding(DamageBuildingNetwork damageBuildingNetwork)
+    {
+        _gameState.buildings[damageBuildingNetwork.id].damage += 1;
+    }
+
+    public override void SendSeedBuilding(SeedBuildingNetwork seedBuildingNetwork)
+    {
+        _gameState.buildings[seedBuildingNetwork.id].plant += 1;
     }
     
     private void Update()
