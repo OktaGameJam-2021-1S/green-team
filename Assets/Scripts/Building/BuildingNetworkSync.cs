@@ -51,4 +51,9 @@ public class BuildingNetworkSync : MonoBehaviour
         _damageCreated.Add(damage);
     }
 
+    public int DamageTaken()
+    {
+        return _damageCreated.Count;
+    }
+
 }

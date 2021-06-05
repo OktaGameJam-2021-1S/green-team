@@ -12,11 +12,23 @@ public class GameController : MonoBehaviour
     private Dictionary<int, PlayerNetworkSync> _players;
     private Dictionary<int, BuildingNetworkSync> _buildings;
 
+    public static GameController Instance { get; private set; }
+
     private void Awake()
     {
         _isFirstGameState = true;
         _players = new Dictionary<int, PlayerNetworkSync>();
         _buildings = new Dictionary<int, BuildingNetworkSync>();
+    }
+
+    public List<BuildingNetworkSync> Buildings
+    {
+        get
+        {
+            List<BuildingNetworkSync> items = new List<BuildingNetworkSync>();
+            items.AddRange(_buildings.Values);
+            return items;
+        }
     }
 
     private void Start()
@@ -56,5 +68,6 @@ public class GameController : MonoBehaviour
             buildingData.Sync(building);
         }
     }
+
 
 }
