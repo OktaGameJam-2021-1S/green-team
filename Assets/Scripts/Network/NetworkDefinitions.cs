@@ -8,6 +8,9 @@ public class PlayerNetwork
     public float x;
     public int y;
 
+    public float speed;
+    public float moveSpeed;
+
     public bool hasTool;
     public int toolId;
 }

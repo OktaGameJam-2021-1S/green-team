@@ -60,7 +60,9 @@ public class LocalNetworkController : NetworkController
 
     public override void SendInput(PlayerInputNetwork inputNetwork)
     {
-        _gameState.players[0].x += 5f * inputNetwork.horizontal * Time.deltaTime;
+        _gameState.players[0].moveSpeed = 5;
+        _gameState.players[0].speed = inputNetwork.horizontal * _gameState.players[0].moveSpeed;
+        _gameState.players[0].x += _gameState.players[0].speed * Time.deltaTime;
         _gameState.players[0].y += inputNetwork.vertical;
 
          if (inputNetwork.use && tool == ToolSprite.Tool.Hammer)
