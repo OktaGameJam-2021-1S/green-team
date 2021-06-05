@@ -27,6 +27,8 @@ public class BuildingNetwork
 
 public class GameStateNetwork
 {
+    public int gameId;
+    public string hash;
     public List<PlayerNetwork> players;
     public List<BuildingNetwork> buildings;
 }

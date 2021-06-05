@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f275a7aae58564faae2f92aa4116fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _url: https://greenteamjam.herokuapp.com/
+  _url: http://localhost:3000
 --- !u!4 &1986963526
 Transform:
   m_ObjectHideFlags: 0

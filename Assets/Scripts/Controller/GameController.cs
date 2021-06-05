@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
     private Dictionary<int, PlayerNetworkSync> _players;
     private Dictionary<int, BuildingNetworkSync> _buildings;
 
+    private GameStateNetwork _lastState;
+
     private void Awake()
     {
         _isFirstGameState = true;
@@ -24,9 +26,15 @@ public class GameController : MonoBehaviour
         NetworkController.Instance.OnGameState += HandleGameState;
     }
 
-    private void HandleGameState(GameStateNetwork state)
+    private void Update()
     {
-        foreach (var player in state.players)
+        UpdateState();
+    }
+
+    private void UpdateState()
+    {
+        if (_lastState == null) return;
+        foreach (var player in _lastState.players)
         {
             PlayerNetworkSync playerData = null;
             if (!_players.ContainsKey(player.id))
@@ -41,7 +49,7 @@ public class GameController : MonoBehaviour
             playerData.Sync(player);
         }
         
-        foreach (var building in state.buildings)
+        foreach (var building in _lastState.buildings)
         {
             BuildingNetworkSync buildingData = null;
             if (!_buildings.ContainsKey(building.id))
@@ -55,6 +63,11 @@ public class GameController : MonoBehaviour
             }
             buildingData.Sync(building);
         }
+    }
+
+    private void HandleGameState(GameStateNetwork state)
+    {
+        _lastState = state;
     }
 
 }

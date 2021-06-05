@@ -46,34 +46,6 @@ public class PlayerInput : MonoBehaviour
             };
             NetworkController.Instance.SendInput(input);
         }
-        else
-        {
-            SinglePlayerSync();
-        }
-
-    }
-
-    // Delete this
-    [SerializeField] private float _moveSpeed = 5f;
-    private PlayerNetworkSync _sync;
-    private PlayerMovement _movement;
-    private void SinglePlayerSync()
-    {
-        if (_sync == null) _sync = FindObjectOfType<PlayerNetworkSync>();
-        if (_movement == null) _movement = FindObjectOfType<PlayerMovement>();
-
-        _sync.Sync(new PlayerNetwork()
-        {
-            x = _sync.transform.position.x + (_horizontal * _moveSpeed * Time.deltaTime),
-            y = (int)(_movement.VerticalPosition + _vertical),
-            tool = 1
-        });
-
-        if (_use)
-        {
-            var pBuilding = FindObjectOfType<BuildingNetworkSync>();
-            pBuilding.TakeDamage();
-        }
 
     }
 
