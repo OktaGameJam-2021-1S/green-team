@@ -14,8 +14,8 @@ public class BuildingNetwork
 {
     public int id;
 
-    public float width;
-    public float height;
+    public int width;
+    public int height;
     public float x;
     
     public string color;
@@ -38,4 +38,15 @@ public class PlayerInputNetwork
     public int vertical;
     public int horizontal;
     public bool use;
+
+    public void Clear()
+    {
+        vertical = 0;
+        use = false;
+    }
+}
+
+public class DamageBuildingNetwork
+{
+    public int id;
 }

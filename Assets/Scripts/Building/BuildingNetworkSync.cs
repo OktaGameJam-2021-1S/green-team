@@ -11,6 +11,12 @@ public class BuildingNetworkSync : MonoBehaviour
     private int _id;
     public int ID => _id;
 
+    private int _height;
+    public int Height => _height;
+    
+    private int _width;
+    public int Width => _width;
+
     private List<GameObject> _damageCreated;
     private SpriteRenderer _spriteRenderer;
 
@@ -29,6 +35,9 @@ public class BuildingNetworkSync : MonoBehaviour
         {
             _spriteRenderer.color = color;
         }
+
+        _height = network.height;
+        _width = network.width;
 
         transform.position = new Vector3(network.x, -1.5f, 0f);
         _spriteRenderer.transform.localScale = new Vector3(network.width, network.height, 1f);
@@ -54,6 +63,14 @@ public class BuildingNetworkSync : MonoBehaviour
     public int DamageTaken()
     {
         return _damageCreated.Count;
+    }
+
+    public void DealDamage()
+    {
+        NetworkController.Instance.SendDamageBuilding(new DamageBuildingNetwork()
+        {
+            id = _id
+        });
     }
 
 }

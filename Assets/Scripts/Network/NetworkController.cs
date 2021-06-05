@@ -17,6 +17,7 @@ public class NetworkController : MonoBehaviour
     private QSocket _socket;
 
     private PlayerInputNetwork _inputNetwork;
+    private NetworkPlayerInput _playerInput;
 
     private bool _connected;
 
@@ -24,6 +25,9 @@ public class NetworkController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         Instance = this;
+
+        _inputNetwork = new PlayerInputNetwork();
+        _playerInput = GetComponent<NetworkPlayerInput>();
     }
 
     private void Start()
@@ -36,6 +40,7 @@ public class NetworkController : MonoBehaviour
         _socket.On (QSocket.EVENT_CONNECT, () => {
             Debug.Log ("Connected");
             _connected = true;
+            _socket.On("player_connect", HandlePlayerConnect);
             _socket.On("game_state", HandleGameState);
         });
 
@@ -60,11 +65,34 @@ public class NetworkController : MonoBehaviour
         });
     }
 
+    private void HandlePlayerConnect(object data)
+    {
+        try
+        {
+            var json = (JObject)data;
+            var playerNetwork = json.ToObject<PlayerNetwork>();
+            _playerInput.Construct(playerNetwork);
+        }
+        catch (System.Exception err)
+        {
+            Debug.LogError(err.Message);
+            throw;
+        }
+    }
+
     private void HandleGameState(object data)
     {
-        var json = (JObject)data;
-        var gameState = json.ToObject<GameStateNetwork>();
-        DispatchGameState(gameState);
+        try
+        {
+            var json = (JObject)data;
+            var gameState = json.ToObject<GameStateNetwork>();
+            DispatchGameState(gameState);
+        }
+        catch (System.Exception err)
+        {
+            Debug.LogError(err.Message);
+            throw;
+        }
     }
 
     protected void DispatchGameState(GameStateNetwork gameState)
@@ -72,9 +100,16 @@ public class NetworkController : MonoBehaviour
         OnGameState?.Invoke(gameState);
     }
 
+    public virtual void SendDamageBuilding(DamageBuildingNetwork damageBuildingNetwork)
+    {
+        _socket.Emit ("player_damage_building", Newtonsoft.Json.JsonConvert.SerializeObject(damageBuildingNetwork));
+    }
+
     public virtual void SendInput(PlayerInputNetwork inputNetwork)
     {
-        _inputNetwork = inputNetwork;
+        _inputNetwork.horizontal = inputNetwork.horizontal;
+        if (inputNetwork.vertical != 0) _inputNetwork.vertical = inputNetwork.vertical;
+        if (inputNetwork.use) _inputNetwork.use = inputNetwork.use;
     }
 
     private IEnumerator SendInputCoroutine()
@@ -84,6 +119,7 @@ public class NetworkController : MonoBehaviour
         {
             yield return new WaitForSeconds(.1f);
             _socket.Emit ("player_input", Newtonsoft.Json.JsonConvert.SerializeObject(_inputNetwork));
+            _inputNetwork.Clear();
         }
     }
 

@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
         _buildings = new Dictionary<int, BuildingNetworkSync>();
     }
 
+    public Dictionary<int, PlayerNetworkSync> Players => _players;
     public List<BuildingNetworkSync> Buildings
     {
         get
