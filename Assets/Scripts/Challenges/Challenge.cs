@@ -20,6 +20,6 @@ public enum ChallengeType
 public enum ComparisonType
 {
     Equal = 0,
-    Lesser = 1,
-    Greater = 2,
+    LesserEqual = 1,
+    GreaterEqual = 2,
 }

@@ -5,7 +5,6 @@ public class ChallengeController : MonoBehaviour
 {
 
     public ChallengeConfiguration _configurationAsset;
-
     public List<ChallengeView> _actualChallenges;
 
     [SerializeField] GameObject _challengeViewPrefab;
@@ -14,8 +13,16 @@ public class ChallengeController : MonoBehaviour
     private void Start()
     {
         SetupChallengeViews();
+        NetworkController.Instance.OnGameState += UpdateChallenges;
     }
 
+    private void UpdateChallenges(GameStateNetwork state)
+    {
+        for (int i = 0; i < _actualChallenges.Count; i++)
+        {
+            _actualChallenges[i].UpdateProgress();
+        }
+    }
 
     private void SetupChallengeViews()
     {
@@ -27,8 +34,7 @@ public class ChallengeController : MonoBehaviour
             _actualChallenges.Add(challengeView);
         }
     }
-
-    
+        
 
     public static bool CheckAmount(Challenge challenge)
     {
@@ -41,10 +47,10 @@ public class ChallengeController : MonoBehaviour
         {
             case ComparisonType.Equal:
                 return progression == challenge.Value;
-            case ComparisonType.Greater:
-                return progression > challenge.Value;
-            case ComparisonType.Lesser:
-                return progression < challenge.Value;
+            case ComparisonType.GreaterEqual:
+                return progression >= challenge.Value;
+            case ComparisonType.LesserEqual:
+                return progression <= challenge.Value;
         }
         return false;
     }

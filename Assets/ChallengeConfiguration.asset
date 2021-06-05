@@ -13,18 +13,15 @@ MonoBehaviour:
   m_Name: ChallengeConfiguration
   m_EditorClassIdentifier: 
   Challenges:
-  - Name: Demolish2-10Buildings
+  - Name: Demolish
     ChallengeType: 0
     Value: 2
-    MaxValue: 10
-    ComparisonType: 3
-  - Name: DemolishLessThan3Buildings
-    ChallengeType: 0
-    Value: 3
-    MaxValue: 0
-    ComparisonType: 1
-  - Name: Naturalize5OrMoreBuildings
+    ComparisonType: 2
+  - Name: Naturalize
     ChallengeType: 1
+    Value: 3
+    ComparisonType: 2
+  - Name: Damage
+    ChallengeType: 2
     Value: 4
-    MaxValue: 0
     ComparisonType: 2
