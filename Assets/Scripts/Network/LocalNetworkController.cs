@@ -63,16 +63,6 @@ public class LocalNetworkController : NetworkController
         _gameState.players[0].x += 5f * inputNetwork.horizontal * Time.deltaTime;
         _gameState.players[0].y += inputNetwork.vertical;
 
-         if (inputNetwork.use && tool == ToolSprite.Tool.Hammer)
-         {
-             _gameState.buildings[0].damage += 1;
-         }
-
-         if (inputNetwork.use && tool == ToolSprite.Tool.Seed)
-         {
-             _gameState.buildings[0].plant += 1;
-         }
-
     }
 
     public override void SendDamageBuilding(DamageBuildingNetwork damageBuildingNetwork)

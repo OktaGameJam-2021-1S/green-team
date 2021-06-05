@@ -7,9 +7,12 @@ public class ChallengeListView : MonoBehaviour
 {
     [SerializeField] Animator _ListViewAnimator;
     [SerializeField] Button _ToggleButton;
-    [SerializeField] Text _ToggleButtonText;
+    [SerializeField] Image _ToggleButtonIcon;
 
     bool bIsEnabled;
+
+    [SerializeField] Sprite _ToggleOn;
+    [SerializeField] Sprite _ToggleOff;
 
     private void Start()
     {
@@ -22,10 +25,12 @@ public class ChallengeListView : MonoBehaviour
         if(bIsEnabled)
         {
             _ListViewAnimator.Play("Hide");
+            _ToggleButtonIcon.sprite = _ToggleOn;
         }
         else
         {
             _ListViewAnimator.Play("Show");
+            _ToggleButtonIcon.sprite = _ToggleOff;
         }
         bIsEnabled = !bIsEnabled;
     }
