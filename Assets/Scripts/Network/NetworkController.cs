@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Socket.Quobject.SocketIoClientDotNet.Client;
+using Socket.Newtonsoft.Json.Linq;
 
 public class NetworkController : MonoBehaviour
 {
 
-    public static NetworkController Instance { get; private set; }
+    public static NetworkController Instance { get; protected set; }
 
     public delegate void GameStateHandler(GameStateNetwork state);
     public event GameStateHandler OnGameState;
@@ -15,7 +16,11 @@ public class NetworkController : MonoBehaviour
 
     private QSocket _socket;
 
-    private void Awake()
+    private PlayerInputNetwork _inputNetwork;
+
+    private bool _connected;
+
+    protected virtual void Awake()
     {
         DontDestroyOnLoad(gameObject);
         Instance = this;
@@ -24,21 +29,14 @@ public class NetworkController : MonoBehaviour
     private void Start()
     {
         Debug.Log ($"start {_url}");
+        _connected = false;
         _socket = IO.Socket (_url);
 
+        StartCoroutine(SendInputCoroutine());
         _socket.On (QSocket.EVENT_CONNECT, () => {
             Debug.Log ("Connected");
-
-            Debug.Log("Sending PING");
-            // _socket.Emit("ping");
-            // _socket.On("pong", () => {
-            //     Debug.Log("Received PONG");
-            // });
-            // _socket.On("game_state", HandleGameState);
-            _socket.On("game_state", (data) => {
-                Debug.Log("received game_state " + data);
-            });
-
+            _connected = true;
+            _socket.On("game_state", HandleGameState);
         });
 
         _socket.On (QSocket.EVENT_CONNECT_ERROR, () => {
@@ -64,27 +62,34 @@ public class NetworkController : MonoBehaviour
 
     private void HandleGameState(object data)
     {
-        Debug.Log("Received game_state: " + data.ToString());
-        var gameState = Newtonsoft.Json.JsonConvert.DeserializeObject<GameStateNetwork>(data.ToString());
+        var json = (JObject)data;
+        var gameState = json.ToObject<GameStateNetwork>();
+        DispatchGameState(gameState);
+    }
+
+    protected void DispatchGameState(GameStateNetwork gameState)
+    {
         OnGameState?.Invoke(gameState);
     }
 
-    public void SendInput(PlayerInputNetwork inputNetwork)
+    public virtual void SendInput(PlayerInputNetwork inputNetwork)
     {
-        // _socket.Emit ("player_input", Newtonsoft.Json.JsonConvert.SerializeObject(inputNetwork));
+        _inputNetwork = inputNetwork;
+    }
+
+    private IEnumerator SendInputCoroutine()
+    {
+        yield return new WaitUntil(() => _connected);
+        while (true)
+        {
+            yield return new WaitForSeconds(.1f);
+            _socket.Emit ("player_input", Newtonsoft.Json.JsonConvert.SerializeObject(_inputNetwork));
+        }
     }
 
     private void OnDestroy ()
     {
         _socket.Disconnect ();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            HandleGameState("{\"players\":[{\"id\":0,\"x\":1.3,\"y\":1,\"tool\":0},{\"id\":1,\"x\":-1.15,\"y\":0,\"tool\":1}],\"buildings\":[{\"id\":0,\"x\":3,\"width\":2,\"height\":3,\"color\":\"#ffcc00\",\"damage\":1,\"plant\":2,\"graffiti\":false},{\"id\":1,\"x\":5,\"width\":2,\"height\":2,\"color\":\"#21ff07\",\"damage\":7,\"plant\":0,\"graffiti\":true}]}");
-        }
     }
 
 }
