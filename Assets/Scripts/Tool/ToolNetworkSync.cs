@@ -12,6 +12,7 @@ public class ToolNetworkSync : MonoBehaviour
     public PlayerMovement Movement => _movement;
 
     private ToolSprite _toolSprite;
+    private ToolSprite ToolSprite => _toolSprite;
 
     private void Awake()
     {
@@ -36,5 +37,21 @@ public class ToolNetworkSync : MonoBehaviour
         {
             id = _id
         });
+    }
+
+    public void UseTool(PlayerMovement movement)
+    {
+        var building = GameController.Instance.GetBuilding(movement);
+        if (building)
+        {
+            if (_toolSprite.Type == ToolSprite.Tool.Hammer)
+            {
+                building.DealDamage();
+            }
+            else if (_toolSprite.Type == ToolSprite.Tool.Seed)
+            {
+                building.Seed();
+            }
+        }
     }
 }

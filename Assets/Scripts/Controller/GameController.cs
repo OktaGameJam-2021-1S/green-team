@@ -105,4 +105,22 @@ public class GameController : MonoBehaviour
         _lastState = state;
     }
 
+    public BuildingNetworkSync GetBuilding(PlayerMovement movement)
+    {
+        if (movement.VerticalPosition != LayerHeight.Sidewalk) return null;
+        var building = Buildings.Find(building => {
+            if (building.transform.position.x < movement.transform.position.x)
+            {
+                if (building.transform.position.x + building.Width > movement.transform.position.x)
+                {
+                    return true;   
+                }
+            }
+            return false;
+        });
+
+        if (!building) return null;
+        return building;
+    }
+
 }

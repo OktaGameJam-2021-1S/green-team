@@ -97,5 +97,13 @@ public class BuildingNetworkSync : MonoBehaviour
             id = _id
         });
     }
+    
+    public void Seed()
+    {
+        NetworkController.Instance.SendSeedBuilding(new SeedBuildingNetwork()
+        {
+            id = _id
+        });
+    }
 
 }
