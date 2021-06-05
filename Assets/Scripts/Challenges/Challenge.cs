@@ -7,6 +7,8 @@ public struct Challenge
     public int ChallengeType;
     public int Value;
     public int ComparisonType;
+    public int RewardType;
+    public int RewardAmount;
 }
 
 public enum ChallengeType
@@ -22,4 +24,10 @@ public enum ComparisonType
     Equal = 0,
     LesserEqual = 1,
     GreaterEqual = 2,
+}
+
+public enum RewardType
+{
+    None = 0,
+    Score = 1,
 }

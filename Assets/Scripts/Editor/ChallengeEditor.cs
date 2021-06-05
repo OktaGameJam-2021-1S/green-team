@@ -56,13 +56,17 @@ public class ChallengeEditor : EditorWindow
         SerializedProperty itemValue = itemRef.FindPropertyRelative("Value");
         SerializedProperty itemChallengeType = itemRef.FindPropertyRelative("ChallengeType");
         SerializedProperty itemComparisonType = itemRef.FindPropertyRelative("ComparisonType");
+        SerializedProperty itemRewardType = itemRef.FindPropertyRelative("RewardType");
+        SerializedProperty itemRewardAmount = itemRef.FindPropertyRelative("RewardAmount");
 
         itemName.stringValue = EditorGUILayout.TextField("Challenge Name: ", itemName.stringValue);
         EditorGUI.indentLevel++;
         itemChallengeType.intValue = (int)(ChallengeType)EditorGUILayout.EnumPopup("Challenge Type", (ChallengeType)itemChallengeType.intValue);
-        itemComparisonType.intValue = (int)(ComparisonType)EditorGUILayout.EnumPopup("Compartison Type", (ComparisonType)itemComparisonType.intValue);
+        itemComparisonType.intValue = (int)(ComparisonType)EditorGUILayout.EnumPopup("Comparison Type", (ComparisonType)itemComparisonType.intValue);
         EditorGUILayout.PropertyField(itemValue);
-        
+        itemRewardType.intValue = (int)(RewardType)EditorGUILayout.EnumPopup("Reward Type", (RewardType)itemComparisonType.intValue);
+        EditorGUILayout.PropertyField(itemRewardAmount);
+
         if (GUILayout.Button("Remove " + itemName.stringValue))
         {
             RemoveItem(index);
