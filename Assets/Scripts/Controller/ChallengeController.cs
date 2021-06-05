@@ -3,14 +3,36 @@ using UnityEngine;
 
 public class ChallengeController : MonoBehaviour
 {
-    private List<Challenge> _actualChallenges;
+    public List<Challenge> _actualChallenges;
 
+    [SerializeField] GameObject _challengeViewPrefab;
+    [SerializeField] Transform _ChallengelistRoot;
 
-
-    private bool CheckAmount(Challenge challenge)
+    private void Start()
     {
-        int progression = GetChallengeProgression((ChallengeType)challenge.ChallengeType);
+        PopulateActualChallenges();
+        SetupChallengeViews();
+    }
 
+    private void PopulateActualChallenges()
+    {
+        // TODO: Get from scriptable object the quests
+    }
+
+    private void SetupChallengeViews()
+    {
+        for(int i = 0; i < _actualChallenges.Count; i++)
+        {
+            var challengeView = Instantiate(_challengeViewPrefab, _ChallengelistRoot);
+            challengeView.GetComponent<ChallengeView>().SetupView(_actualChallenges[i]);
+        }
+    }
+
+    
+
+    public static bool CheckAmount(Challenge challenge)
+    {
+        int progression = GetChallengeProgression(challenge);
 
         if (progression == -1)
             return false;
@@ -23,15 +45,14 @@ public class ChallengeController : MonoBehaviour
                 return progression > challenge.Value;
             case ComparisonType.Lesser:
                 return progression < challenge.Value;
-            case ComparisonType.Range:
-                return progression > challenge.Value && progression < challenge.MaxValue;
         }
         return false;
     }
 
-    private int GetChallengeProgression(ChallengeType _type)
+    public static int GetChallengeProgression(Challenge challenge)
     {
-        switch (_type)
+        ChallengeType pType = (ChallengeType)challenge.ChallengeType;
+        switch (pType)
         {
             case ChallengeType.Demolish:
                 return GetDemolishedBuildings();
@@ -47,7 +68,7 @@ public class ChallengeController : MonoBehaviour
     }
 
 
-    private int GetDemolishedBuildings()
+    private static int GetDemolishedBuildings()
     {
         int demolishedCount = 0;
         BuildingNetworkSync pBuilding;
@@ -61,7 +82,7 @@ public class ChallengeController : MonoBehaviour
         return demolishedCount;
     }
 
-    private int GetDamageDealt()
+    private static int GetDamageDealt()
     {
         int demolishedCount = 0;
         BuildingNetworkSync pBuilding;
@@ -75,7 +96,7 @@ public class ChallengeController : MonoBehaviour
         return demolishedCount;
     }
 
-    private int GetNaturalizedBuildings()
+    private static int GetNaturalizedBuildings()
     {
         int naturalizedBuildings = 0;
         BuildingNetworkSync pBuilding;
@@ -89,7 +110,7 @@ public class ChallengeController : MonoBehaviour
         return naturalizedBuildings;
     }
 
-    private int GetPlantCount()
+    private static int GetPlantCount()
     {
         int plantCount = 0;
         BuildingNetworkSync pBuilding;

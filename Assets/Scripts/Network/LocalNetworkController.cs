@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LocalNetworkController : NetworkController
 {
-
+    [SerializeField] PlayerTool.Tool tool;
     private GameStateNetwork _gameState;
 
     protected override void Awake()
@@ -17,8 +17,8 @@ public class LocalNetworkController : NetworkController
             id = 0,
             x = 0,
             y = 0,
-            tool = 0
-        });
+            tool = (int)tool
+        }); ;
 
         _gameState.buildings = new List<BuildingNetwork>();
         float x = 0;
@@ -45,6 +45,17 @@ public class LocalNetworkController : NetworkController
     {
         _gameState.players[0].x += 5f * inputNetwork.horizontal * Time.deltaTime;
         _gameState.players[0].y += inputNetwork.vertical;
+
+        if (inputNetwork.use && _gameState.players[0].tool == (int)PlayerTool.Tool.Hammer)
+        {
+            _gameState.buildings[0].damage += 1;
+        }
+
+        if (inputNetwork.use && _gameState.players[0].tool == (int)PlayerTool.Tool.Seed)
+        {
+            _gameState.buildings[0].plant += 1;
+        }
+
     }
     
     private void Update()

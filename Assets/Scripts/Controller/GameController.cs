@@ -18,6 +18,10 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+        Instance = this;
+
+
         _isFirstGameState = true;
         _players = new Dictionary<int, PlayerNetworkSync>();
         _buildings = new Dictionary<int, BuildingNetworkSync>();

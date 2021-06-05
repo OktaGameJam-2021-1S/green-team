@@ -54,7 +54,6 @@ public class ChallengeEditor : EditorWindow
     {
         SerializedProperty itemName = itemRef.FindPropertyRelative("Name");
         SerializedProperty itemValue = itemRef.FindPropertyRelative("Value");
-        SerializedProperty itemMaxValue = itemRef.FindPropertyRelative("MaxValue");
         SerializedProperty itemChallengeType = itemRef.FindPropertyRelative("ChallengeType");
         SerializedProperty itemComparisonType = itemRef.FindPropertyRelative("ComparisonType");
 
@@ -63,8 +62,6 @@ public class ChallengeEditor : EditorWindow
         itemChallengeType.intValue = (int)(ChallengeType)EditorGUILayout.EnumPopup("Challenge Type", (ChallengeType)itemChallengeType.intValue);
         itemComparisonType.intValue = (int)(ComparisonType)EditorGUILayout.EnumPopup("Compartison Type", (ComparisonType)itemComparisonType.intValue);
         EditorGUILayout.PropertyField(itemValue);
-        if( (ComparisonType)(itemComparisonType.intValue) == ComparisonType.Range)
-            EditorGUILayout.PropertyField(itemMaxValue);
         
         if (GUILayout.Button("Remove " + itemName.stringValue))
         {

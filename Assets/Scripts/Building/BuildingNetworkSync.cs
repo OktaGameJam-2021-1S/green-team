@@ -6,7 +6,9 @@ public class BuildingNetworkSync : MonoBehaviour
 {
 
     [SerializeField] private GameObject _damagePrefab = default;
+    [SerializeField] private GameObject _plantPrefab = default;
     [SerializeField] private float _damageOffset = .2f;
+    [SerializeField] private float _plantOffset = .2f;
 
     private int _id;
     public int ID => _id;
@@ -48,6 +50,11 @@ public class BuildingNetworkSync : MonoBehaviour
         {
             TakeDamage();
         }
+
+        while (network.plant > _plantCreated.Count)
+        {
+            PlantSeed();
+        }
     }
 
 
@@ -60,6 +67,17 @@ public class BuildingNetworkSync : MonoBehaviour
             0f
         );
         _damageCreated.Add(damage);
+    }
+
+    public void PlantSeed()
+    {
+        var plant = Instantiate(_plantPrefab, transform);
+        plant.transform.localPosition = new Vector3(
+            Random.Range(_plantOffset, _spriteRenderer.transform.localScale.x - _plantOffset),
+            Random.Range(_plantOffset, _spriteRenderer.transform.localScale.y - _plantOffset),
+            0f
+        );
+        _plantCreated.Add(plant);
     }
 
     public int DamageTaken()

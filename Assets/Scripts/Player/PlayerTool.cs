@@ -9,7 +9,8 @@ public class PlayerTool : MonoBehaviour
     {
         None,
         Hammer,
-        Paint
+        Paint,
+        Seed
     }
 
     [SerializeField] private SpriteRenderer _toolRenderer = default;
