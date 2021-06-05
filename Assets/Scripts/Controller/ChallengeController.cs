@@ -3,28 +3,28 @@ using UnityEngine;
 
 public class ChallengeController : MonoBehaviour
 {
-    public List<Challenge> _actualChallenges;
+
+    public ChallengeConfiguration _configurationAsset;
+
+    public List<ChallengeView> _actualChallenges;
 
     [SerializeField] GameObject _challengeViewPrefab;
     [SerializeField] Transform _ChallengelistRoot;
 
     private void Start()
     {
-        PopulateActualChallenges();
         SetupChallengeViews();
     }
 
-    private void PopulateActualChallenges()
-    {
-        // TODO: Get from scriptable object the quests
-    }
 
     private void SetupChallengeViews()
     {
-        for(int i = 0; i < _actualChallenges.Count; i++)
+        _actualChallenges = new List<ChallengeView>();
+        for (int i = 0; i < _configurationAsset.Challenges.Count; i++)
         {
-            var challengeView = Instantiate(_challengeViewPrefab, _ChallengelistRoot);
-            challengeView.GetComponent<ChallengeView>().SetupView(_actualChallenges[i]);
+            var challengeView = Instantiate(_challengeViewPrefab, _ChallengelistRoot).GetComponent<ChallengeView>();
+            challengeView.SetupView(_configurationAsset.Challenges[i]);
+            _actualChallenges.Add(challengeView);
         }
     }
 
