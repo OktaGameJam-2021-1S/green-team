@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetSpeed(float speed)
     {
-        _playerAnimator.SetFloat("Speed", speed);
+        if(_playerAnimator) _playerAnimator.SetFloat("Speed", speed);
     }
 
 }
