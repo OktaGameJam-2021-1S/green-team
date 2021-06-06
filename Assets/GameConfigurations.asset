@@ -15,22 +15,22 @@ MonoBehaviour:
   Challenges:
   - Name: Demolish
     ChallengeType: 0
-    Value: 2
-    ComparisonType: 2
-    RewardType: 1
-    RewardAmount: 2
-  - Name: Naturalize
-    ChallengeType: 3
     Value: 3
     ComparisonType: 2
     RewardType: 1
-    RewardAmount: 4
-  - Name: Damage
-    ChallengeType: 2
-    Value: 4
+    RewardAmount: 15
+  - Name: Naturalize
+    ChallengeType: 3
+    Value: 18
     ComparisonType: 2
     RewardType: 1
     RewardAmount: 6
+  - Name: Damage
+    ChallengeType: 2
+    Value: 20
+    ComparisonType: 2
+    RewardType: 1
+    RewardAmount: 7
   Scores:
   - Name: Without People
     ScoreType: 1
@@ -44,8 +44,8 @@ MonoBehaviour:
   - Name: Non-Ideal Building
     ScoreType: 3
     Amount: -3
-  WinThreshold: 30
-  SecondsToGameEnd: 180
+  WinThreshold: 40
+  SecondsToGameEnd: 90
   BuildingData:
   - id: 1
     width: 0

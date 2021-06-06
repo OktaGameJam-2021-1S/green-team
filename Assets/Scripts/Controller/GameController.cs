@@ -88,11 +88,10 @@ public class GameController : MonoBehaviour
         MinWorldBounds = pos.m_MinXPosition;
         MaxWorldBounds = pos.m_MaxXPosition;
 
-        for (int i = 0; i < Random.Range(18, 22); i++)
+
+        for (int i = 0; i < Random.Range(9, 13); i++)
         {
             var toolData = Instantiate(_toolPrefab);
-            ToolType type = (ToolType) (i % 2);
-            if (type == ToolType.Paint) type = ToolType.Seed;
 
             toolData.Setup(new ToolNetwork()
             {
@@ -101,7 +100,24 @@ public class GameController : MonoBehaviour
                     pos.m_MaxXPosition - 2
                 ),
                 verticalPosition = (LayerHeight) Random.Range(0, 2),
-                type = type,
+                type = ToolType.Hammer,
+                uses = 5
+            });
+            _tools.Add(toolData);
+        }
+
+        for (int i = 0; i < Random.Range(8, 12); i++)
+        {
+            var toolData = Instantiate(_toolPrefab);
+
+            toolData.Setup(new ToolNetwork()
+            {
+                horizontalPosition = Random.Range(
+                    pos.m_MinXPosition + 2,
+                    pos.m_MaxXPosition - 2
+                ),
+                verticalPosition = (LayerHeight) Random.Range(0, 2),
+                type = ToolType.Seed,
                 uses = 5
             });
             _tools.Add(toolData);
