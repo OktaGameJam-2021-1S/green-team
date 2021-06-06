@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
         Instance = this;
 
         _isFirstGameState = true;
@@ -166,6 +166,12 @@ public class GameController : MonoBehaviour
         {
             PlayerMovement pMovement = item.Value.GetComponent<PlayerMovement>();
             pMovement.LeaveBuilding();
+            IsGameEnded = true;
+        }
+
+        foreach(var item in _buildings.Values)
+        {
+            item.ShowScore();
             IsGameEnded = true;
         }
 
