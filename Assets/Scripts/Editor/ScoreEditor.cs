@@ -31,6 +31,7 @@ public class ScoreEditor : EditorWindow
         _serializedConfig.Update();
 
         EditorGUILayout.PropertyField(_serializedConfig.FindProperty("WinThreshold"));
+        EditorGUILayout.PropertyField(_serializedConfig.FindProperty("SecondsToGameEnd"));
         EditorGUILayout.Separator();
         EditorGUILayout.Space();
         EditorGUILayout.Space();

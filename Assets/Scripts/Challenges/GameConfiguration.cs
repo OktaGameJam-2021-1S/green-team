@@ -9,4 +9,6 @@ public class GameConfiguration : ScriptableObject
 
     public int WinThreshold;
 
+    public float SecondsToGameEnd;
+
 }
