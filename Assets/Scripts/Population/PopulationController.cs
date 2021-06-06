@@ -46,7 +46,7 @@ public class PopulationController : MonoBehaviour
         transform.position = new Vector3(xPos, yPos, zPos);
 
         //Destroy if outside game camera
-        if(xPos > 20f || xPos < -20f)
+        if(xPos > GameController.Instance.MaxWorldBounds+2f || xPos < GameController.Instance.MinWorldBounds - 2f)
         {
             Destroy(gameObject);
         }
