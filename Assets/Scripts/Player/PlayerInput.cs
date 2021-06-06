@@ -54,9 +54,9 @@ public class PlayerInput : MonoBehaviour
 
     private void Use()
     {
-        if (_player.HasTool && _controller.Tools.ContainsKey(_player.ToolId))
+        if (_player.HasTool)
         {
-            _controller.Tools[_player.ToolId].UseTool(_player.Movement);
+            _tool.Use(_playerMovement);
         }
     }
 
@@ -74,8 +74,7 @@ public class PlayerInput : MonoBehaviour
             if (toolSync.Movement.VerticalPosition != _player.Movement.VerticalPosition) continue;
             if (Vector3.Distance(toolSync.transform.position, _player.transform.position) < .5f)
             {
-                toolSync.PickUpTool();
-                _tool.HoldTool(toolSync.transform);
+                _tool.HoldTool(toolSync);
                 break;
             }
         }

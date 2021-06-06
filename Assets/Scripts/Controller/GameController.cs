@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         var player = Instantiate(_playerPrefab);
+        _players.Add(player.ID, player);
 
         BuildingNetworkSync buildData;
         int x = 0;
@@ -52,6 +53,7 @@ public class GameController : MonoBehaviour
             int height = Random.Range(1, 3);
             buildData.Sync(new BuildingNetwork()
             {
+                id = i,
                 x = x,
                 width = width,
                 height = height,
@@ -64,17 +66,20 @@ public class GameController : MonoBehaviour
                 people = 5,
             });
             x += width;
+            _buildings.Add(buildData.ID, buildData);
         }
 
         var toolData = Instantiate(_toolPrefab);
         toolData.Sync(new ToolNetwork()
         {
+            id = 0,
             x = 5,
             y = 1,
             type = (int)ToolSprite.Tool.Hammer,
             uses = 5,
             isHold = false
         });
+        _tools.Add(toolData.ID, toolData);
     }
 
     public BuildingNetworkSync GetBuilding(PlayerMovement movement)

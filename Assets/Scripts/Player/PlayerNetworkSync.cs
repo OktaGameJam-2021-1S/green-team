@@ -32,27 +32,5 @@ public class PlayerNetworkSync : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _tool = GetComponent<PlayerTool>();
     }
-    
-    public void Sync(PlayerNetwork network)
-    {
-        _id = network.id;
-        _movement.MoveHorizontal(network.x);
-        _movement.MoveVertical(network.y);
-        
-        _toolId = network.toolId;
-        _hasTool = network.hasTool;
-
-        _speed = network.speed;
-        _moveSpeed = network.moveSpeed;
-
-        if (!network.hasTool)
-        {
-            _tool.DropTool();
-        }
-        else if (_controller.Tools.ContainsKey(network.toolId))
-        {
-            _tool.HoldTool(_controller.Tools[network.toolId].transform);
-        }
-    }
 
 }

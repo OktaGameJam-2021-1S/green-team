@@ -31,11 +31,6 @@ public class ToolNetworkSync : MonoBehaviour
         }
     }
 
-    public void PickUpTool()
-    {
-        
-    }
-
     public void UseTool(PlayerMovement movement)
     {
         var building = GameController.Instance.GetBuilding(movement);
