@@ -7,6 +7,8 @@ public class ChallengeController : MonoBehaviour
     public ChallengeConfiguration _configurationAsset;
     public List<ChallengeView> _actualChallenges;
 
+    [SerializeField]  private int _actualPoints;
+
     [SerializeField] GameObject _challengeViewPrefab;
     [SerializeField] Transform _ChallengelistRoot;
 
@@ -14,6 +16,7 @@ public class ChallengeController : MonoBehaviour
     {
         SetupChallengeViews();
         NetworkController.Instance.OnGameState += UpdateChallenges;
+        _actualPoints = 0;
     }
 
     private void UpdateChallenges(GameStateNetwork state)
@@ -31,6 +34,7 @@ public class ChallengeController : MonoBehaviour
         {
             var challengeView = Instantiate(_challengeViewPrefab, _ChallengelistRoot).GetComponent<ChallengeView>();
             challengeView.SetupView(_configurationAsset.Challenges[i]);
+            challengeView.OnChallengeComplete += OnChallengeComplete;
             _actualChallenges.Add(challengeView);
         }
     }
@@ -68,11 +72,22 @@ public class ChallengeController : MonoBehaviour
                 return GetDamageDealt();
             case ChallengeType.GrowPlant:
                 return GetPlantCount();
+            case ChallengeType.Graffiti:
+                return GetGraffitiCount();
             default:
                 return -1;
         }
     }
 
+    private void OnChallengeComplete(Challenge pChallenge)
+    {
+        switch ((RewardType)pChallenge.RewardType)
+        {
+            case RewardType.Score:
+                _actualPoints += pChallenge.RewardAmount;
+                break;
+        }
+    }
 
     private static int GetDemolishedBuildings()
     {
@@ -82,7 +97,7 @@ public class ChallengeController : MonoBehaviour
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            demolishedCount += (pBuilding.DamageTaken() > 10)? 1: 0;
+            demolishedCount += (pBuilding.DamageTaken >= pBuilding.MaxDamage)? 1: 0;
         }
 
         return demolishedCount;
@@ -96,7 +111,7 @@ public class ChallengeController : MonoBehaviour
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            demolishedCount += pBuilding.DamageTaken();
+            demolishedCount += pBuilding.DamageTaken;
         }
 
         return demolishedCount;
@@ -110,7 +125,7 @@ public class ChallengeController : MonoBehaviour
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            naturalizedBuildings += (pBuilding.PlantCount() > 10) ? 1 : 0;
+            naturalizedBuildings += (pBuilding.PlantCount > pBuilding.MaxPlant) ? 1 : 0;
         }
 
         return naturalizedBuildings;
@@ -124,9 +139,23 @@ public class ChallengeController : MonoBehaviour
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            plantCount += pBuilding.PlantCount();
+            plantCount += pBuilding.PlantCount;
         }
 
         return plantCount;
+    }
+
+    private static int GetGraffitiCount()
+    {
+        int graffitiCount = 0;
+        BuildingNetworkSync pBuilding;
+        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        for (int i = 0; i < lBuildings.Count; i++)
+        {
+            pBuilding = lBuildings[i];
+            graffitiCount += pBuilding.GraffitiCount;
+        }
+
+        return graffitiCount;
     }
 }

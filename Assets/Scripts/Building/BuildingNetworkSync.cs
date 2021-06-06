@@ -10,6 +10,20 @@ public class BuildingNetworkSync : MonoBehaviour
     [SerializeField] private float _damageOffset = .2f;
     [SerializeField] private float _plantOffset = .2f;
 
+
+    private int _peopleNumber;
+
+    public int Peoples => _peopleNumber;
+
+    private int _maxDamage;
+
+    public int MaxDamage => _maxDamage;
+
+    private int _maxPlant;
+
+    public int MaxPlant => _maxPlant;
+
+
     private int _id;
     public int ID => _id;
 
@@ -21,12 +35,22 @@ public class BuildingNetworkSync : MonoBehaviour
 
     private List<GameObject> _damageCreated;
     private List<GameObject> _plantCreated;
+    private List<GameObject> _graffitiCreated;
+
+    public int GraffitiCount => _graffitiCreated.Count;
+
+    public int DamageTaken => _damageCreated.Count;
+
+    public int PlantCount => _plantCreated.Count;
+
+
     private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _damageCreated = new List<GameObject>();
         _plantCreated = new List<GameObject>();
+        _graffitiCreated = new List<GameObject>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     
@@ -55,6 +79,10 @@ public class BuildingNetworkSync : MonoBehaviour
         {
             PlantSeed();
         }
+
+        _maxDamage = network.maxDamage;
+        _maxPlant = network.maxPlant;
+        _peopleNumber = network.people;
     }
 
 
@@ -78,16 +106,6 @@ public class BuildingNetworkSync : MonoBehaviour
             0f
         );
         _plantCreated.Add(plant);
-    }
-
-    public int DamageTaken()
-    {
-        return _damageCreated.Count;
-    }
-
-    public int PlantCount()
-    {
-        return _plantCreated.Count;
     }
 
     public void DealDamage()

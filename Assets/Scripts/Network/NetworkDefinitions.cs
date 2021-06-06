@@ -24,7 +24,12 @@ public class BuildingNetwork
 
     public int damage;
     public int plant;
-    public bool graffiti;
+    public int graffiti;
+
+    public int maxDamage;
+    public int maxPlant;
+
+    public int people;
 }
 
 public class ToolNetwork

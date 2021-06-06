@@ -64,7 +64,7 @@ public class ChallengeEditor : EditorWindow
         itemChallengeType.intValue = (int)(ChallengeType)EditorGUILayout.EnumPopup("Challenge Type", (ChallengeType)itemChallengeType.intValue);
         itemComparisonType.intValue = (int)(ComparisonType)EditorGUILayout.EnumPopup("Comparison Type", (ComparisonType)itemComparisonType.intValue);
         EditorGUILayout.PropertyField(itemValue);
-        itemRewardType.intValue = (int)(RewardType)EditorGUILayout.EnumPopup("Reward Type", (RewardType)itemComparisonType.intValue);
+        itemRewardType.intValue = (int)(RewardType)EditorGUILayout.EnumPopup("Reward Type", (RewardType)itemRewardType.intValue);
         EditorGUILayout.PropertyField(itemRewardAmount);
 
         if (GUILayout.Button("Remove " + itemName.stringValue))

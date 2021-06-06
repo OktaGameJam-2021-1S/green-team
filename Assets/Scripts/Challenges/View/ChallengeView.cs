@@ -9,13 +9,19 @@ public class ChallengeView : MonoBehaviour
 
     Challenge _ReferenceChallenge;
 
+    bool bIsCompleted;
+
     [SerializeField] Image challengeImage;
     [SerializeField] Slider challengeProgressBar;
     [SerializeField] TextMeshProUGUI challengeProgressText;
     [SerializeField] GenericDictionary<ChallengeType, Sprite> _challengeSprite;
 
+    public delegate void OnCompleteHandler(Challenge pChallenge);
+    public event OnCompleteHandler OnChallengeComplete;
+
     public void SetupView(Challenge pChallenge)
     {
+        bIsCompleted = false;
         _ReferenceChallenge = pChallenge;
         challengeImage.sprite = _challengeSprite[(ChallengeType)pChallenge.ChallengeType];
         challengeProgressBar.maxValue = pChallenge.Value;
@@ -30,9 +36,11 @@ public class ChallengeView : MonoBehaviour
         challengeProgressBar.value = iChallengeProgression;
 
 
-        if (ChallengeController.CheckAmount(_ReferenceChallenge))
+        if (ChallengeController.CheckAmount(_ReferenceChallenge) && !bIsCompleted)
         {
+            bIsCompleted = true;
             challengeProgressText.color = Color.green;
+            OnChallengeComplete?.Invoke(_ReferenceChallenge);
         }
 
     }

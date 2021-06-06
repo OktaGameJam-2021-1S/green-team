@@ -17,11 +17,17 @@ MonoBehaviour:
     ChallengeType: 0
     Value: 2
     ComparisonType: 2
+    RewardType: 1
+    RewardAmount: 2
   - Name: Naturalize
     ChallengeType: 1
     Value: 3
     ComparisonType: 2
+    RewardType: 1
+    RewardAmount: 4
   - Name: Damage
     ChallengeType: 2
     Value: 4
     ComparisonType: 2
+    RewardType: 1
+    RewardAmount: 6
