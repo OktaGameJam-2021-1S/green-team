@@ -337,7 +337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293993588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.6, y: 6.85, z: 1146.7334}
+  m_LocalPosition: {x: 40, y: 5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1033,7 +1033,7 @@ MonoBehaviour:
   _resultPanel: {fileID: 276992165}
   _resultText: {fileID: 852967490}
   _resultScore: {fileID: 943060246}
-  _enemyPrefab: {fileID: 4381364533368028271, guid: 3696d69c3d89e9b44bd4fe84256e6d70, type: 3}
+  _enemyPrefab: {fileID: 2908194421170883720, guid: 367555308bd865e4d82bfe4cd3964995, type: 3}
   _enemyRootSpawn: {fileID: 293993589}
   MinWorldBounds: 0
   MaxWorldBounds: 0
