@@ -15,7 +15,7 @@ public class ScoreController : MonoBehaviour
     private void Start()
     {
         SetupChallengeViews();
-        NetworkController.Instance.OnGameState += UpdateChallenges;
+        // NetworkController.Instance.OnGameState += UpdateChallenges;
         _actualPoints = 0;
     }
 
