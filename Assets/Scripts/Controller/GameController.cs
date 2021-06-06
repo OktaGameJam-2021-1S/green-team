@@ -43,6 +43,8 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public bool IsGameEnded { get; private set; }
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -151,6 +153,13 @@ public class GameController : MonoBehaviour
         }
         _resultPanel.SetActive(true);
         _resultScore.text = pTotalScore.ToString();
+
+        foreach(var item in Players)
+        {
+            PlayerMovement pMovement = item.Value.GetComponent<PlayerMovement>();
+            pMovement.LeaveBuilding();
+            IsGameEnded = true;
+        }
     }
 
     public void UpdateAllChallenges()

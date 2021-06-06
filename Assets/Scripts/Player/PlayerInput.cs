@@ -54,6 +54,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Use()
     {
+        if (GameController.Instance.IsGameEnded) return;
         if (_playerMovement.InsideBuilding)
         {
             if (_tool.HasTool)
@@ -71,6 +72,7 @@ public class PlayerInput : MonoBehaviour
 
     private void PickTool()
     {
+        if (GameController.Instance.IsGameEnded) return;
         if (_tool.HasTool)
         {
             DropTool();
@@ -91,6 +93,7 @@ public class PlayerInput : MonoBehaviour
 
     public void DropTool()
     {
+        if (GameController.Instance.IsGameEnded) return;
         if (_playerMovement.InsideBuilding) return;
         _tool.DropTool();
     }

@@ -28,8 +28,10 @@ public class PlayerMovement : MonoBehaviour
     {
         LayerHeight lastLayerHeight = _verticalPosition;
         _verticalPosition = _verticalPosition + y;
-        if ((int)_verticalPosition > (int)LayerHeight.Building) _verticalPosition = LayerHeight.Building;
-        if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
+        if (_verticalPosition > LayerHeight.Building) _verticalPosition = LayerHeight.Building;
+        if (_verticalPosition < LayerHeight.Street) _verticalPosition = LayerHeight.Street;
+
+        if (GameController.Instance.IsGameEnded && _verticalPosition == LayerHeight.Building) _verticalPosition = LayerHeight.Sidewalk;
 
         float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
 
@@ -55,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void EnterBuilding()
     {
+        if (GameController.Instance.IsGameEnded) return;
         var building = GameController.Instance.GetBuilding(this, false);
         if (building)
         {
@@ -69,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void LeaveBuilding()
+    public void LeaveBuilding()
     {
         if (_insideBuilding)
         {
