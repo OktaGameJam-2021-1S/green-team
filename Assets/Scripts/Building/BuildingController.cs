@@ -150,14 +150,14 @@ public class BuildingController : MonoBehaviour
             _playerCount.gameObject.SetActive(false);
         }
 
-        _alertPlant.SetActive((Naturalized + 1 > _maxPlant));
-        _alertHammer.SetActive((DamageTaken + 1 > _maxDamage));
+        _alertPlant.SetActive((Naturalized >= _maxPlant && !Demolished));
+        _alertHammer.SetActive((DamageTaken >= _maxDamage && !Demolished));
 
     }
 
     public void DealDamageFloor()
     {
-        if (_maxPlant <= DamageTaken)
+        if (_maxDamage <= DamageTaken)
         {
             DemolishBuilding();
         }
@@ -212,6 +212,10 @@ public class BuildingController : MonoBehaviour
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
+        _alertHammer.SetActive(false);
+        _alertPlant.SetActive(false);
+        _playerCount.gameObject.SetActive(false);
+        _personCount.gameObject.SetActive(false);
         UpdateMarkers();
         OnDemolish?.Invoke();
     }
@@ -263,6 +267,16 @@ public class BuildingController : MonoBehaviour
 
     private void SpawnCitizen() {
         Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
+    }
+
+    public bool IsIdeal()
+    {
+        List<BuildingFloor> availablesFloors = new List<BuildingFloor>();
+        for (int i = 0; i < _floors.Count; i++)
+        {
+            if (_floors[i].Interactable) return false;
+        }
+        return true;
     }
 
 }
