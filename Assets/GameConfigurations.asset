@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e73ef037210c4044b545738cb6b228f, type: 3}
-  m_Name: ScoreConfiguration
+  m_Name: GameConfigurations
   m_EditorClassIdentifier: 
   Challenges:
   - Name: Demolish
@@ -45,3 +45,4 @@ MonoBehaviour:
     ScoreType: 3
     Amount: -3
   WinThreshold: 30
+  SecondsToGameEnd: 360
