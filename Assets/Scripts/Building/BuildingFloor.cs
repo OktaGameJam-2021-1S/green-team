@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingFloor : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _naturalized;
+    [SerializeField] private SpriteRenderer _naturalized;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private BoxCollider2D _collider;
 
@@ -12,23 +13,57 @@ public class BuildingFloor : MonoBehaviour
 
     public bool Interactable { get; private set; }
 
+
+    Color baseColor = Color.white;
+
     private void Start()
     {
         _renderer.material.SetFloat("_Damage", 0f);
-        _naturalized.SetActive(false);
+        baseColor.a = 0f;
+        _naturalized.color = baseColor;
         Interactable = true;
     }
 
     public void Naturalize()
     {
-        _naturalized.SetActive(true);
+        StartCoroutine(NaturalizeAnimation());
         Interactable = false;
     }
 
     public void DamageFloor()
     {
-        _renderer.material.SetFloat("_Damage", 1f);
+
+        StartCoroutine(DamageAnimation());
         Interactable = false;
     }
-    
+
+    IEnumerator DamageAnimation()
+    {
+        float fTime = 0;
+        float fMaxTime = 0.9f;
+        while(fTime <= fMaxTime)
+        {
+            _renderer.material.SetFloat("_Damage", fTime / fMaxTime);
+            fTime += Time.deltaTime;
+            yield return null;
+        }
+        _renderer.material.SetFloat("_Damage", 1f);
+    }
+
+    IEnumerator NaturalizeAnimation()
+    {
+        float fTime = 0;
+        float fMaxTime = 0.9f;
+        while (fTime <= fMaxTime)
+        {
+            baseColor.a = fTime / fMaxTime;
+
+            _naturalized.color = baseColor;
+            fTime += Time.deltaTime;
+            yield return null;
+        }
+        baseColor.a = 1f;
+        _naturalized.color = baseColor;
+    }
+
 }

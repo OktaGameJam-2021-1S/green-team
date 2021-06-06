@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < _buildings.Count; i++)
         {
             building = Instantiate(_buildingPrefab);
-            building.transform.position = new Vector3(0 + _buildingDistance * i, 0);
+            building.transform.position = new Vector3(0 + _buildingDistance * i, 0, 0f);
             building.Setup(_buildings[i]);
         }
 
