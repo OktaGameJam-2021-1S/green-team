@@ -193,7 +193,7 @@ public class ScoreController : MonoBehaviour
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            // TODO: Check if all floor has something
+            idealBuildings = pBuilding.IsIdeal() ? 1 : 0;
         }
         return idealBuildings;
     }
