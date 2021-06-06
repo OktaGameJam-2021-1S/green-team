@@ -119,9 +119,9 @@ public class BuildingController : MonoBehaviour
         _playerCount.gameObject.transform.position = new Vector3(_playerCount.transform.position.x, topFloor.transform.position.y + 0.3f, _playerCount.transform.position.z);
         _personCount.gameObject.transform.position = new Vector3(_personCount.transform.position.x, topFloor.transform.position.y + 0.3f, _personCount.transform.position.z);
 
-        Vector3 _alertPosition = new Vector3(_alertHammer.transform.position.x, topFloor.transform.position.y + 0.3f, _alertHammer.transform.position.z);
 
-        _alertHammer.transform.position = _alertPlant.transform.position = _alertPosition;
+        _alertHammer.transform.position = new Vector3(_alertHammer.transform.position.x, topFloor.transform.position.y + 0.3f, _alertHammer.transform.position.z);
+        _alertPlant.transform.position = new Vector3(_alertPlant.transform.position.x, topFloor.transform.position.y + 0.3f, _alertPlant.transform.position.z);
 
         UpdateMarkers();
 
@@ -157,7 +157,7 @@ public class BuildingController : MonoBehaviour
 
     public void DealDamageFloor()
     {
-        if (_maxPlant < DamageTaken)
+        if (_maxPlant <= DamageTaken)
         {
             DemolishBuilding();
         }
@@ -165,12 +165,13 @@ public class BuildingController : MonoBehaviour
         {
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.DamageFloor();
+            UpdateMarkers();
         }
     }
 
     public void NaturalizeFloor()
     {
-        if (_maxPlant < Naturalized)
+        if (_maxPlant <= Naturalized)
         {
             DemolishBuilding();
         }
@@ -178,6 +179,7 @@ public class BuildingController : MonoBehaviour
         {
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.Naturalize();
+            UpdateMarkers();
         }
     }
 
@@ -210,7 +212,7 @@ public class BuildingController : MonoBehaviour
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
-
+        UpdateMarkers();
         OnDemolish?.Invoke();
     }
 

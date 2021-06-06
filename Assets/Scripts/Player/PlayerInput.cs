@@ -54,15 +54,18 @@ public class PlayerInput : MonoBehaviour
 
     private void Use()
     {
-        if (_tool.HasTool && _playerMovement.InsideBuilding)
+        if (_playerMovement.InsideBuilding)
         {
-            _tool.Use(_playerMovement.InsideBuilding);
-        }
-        else
-        {
-            var building = GameController.Instance.GetBuilding(_playerMovement, false);
-            building.Yell();
-            GameController.Instance.UpdateAllChallenges();
+            if (_tool.HasTool)
+            {
+                _tool.Use(_playerMovement.InsideBuilding);
+            }
+            else
+            {
+                var building = GameController.Instance.GetBuilding(_playerMovement, false);
+                building.Yell();
+                GameController.Instance.UpdateAllChallenges();
+            }
         }
     }
 
