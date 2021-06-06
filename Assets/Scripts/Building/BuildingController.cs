@@ -269,4 +269,14 @@ public class BuildingController : MonoBehaviour
         Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
     }
 
+    public bool IsIdeal()
+    {
+        List<BuildingFloor> availablesFloors = new List<BuildingFloor>();
+        for (int i = 0; i < _floors.Count; i++)
+        {
+            if (_floors[i].Interactable) return false;
+        }
+        return true;
+    }
+
 }

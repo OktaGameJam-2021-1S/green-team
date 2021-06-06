@@ -21,7 +21,6 @@ public class PlayerTool : MonoBehaviour
         _currentTool.transform.parent = _hand;
         _currentTool.transform.localPosition = Vector3.zero;
         _currentTool.transform.localRotation = Quaternion.identity;
-        // _currentTool.transform.localScale = Vector3.one * 4f;
         HasTool = true;
     }
 
@@ -31,6 +30,11 @@ public class PlayerTool : MonoBehaviour
         {
             _currentTool.transform.parent = null;
             _currentTool.transform.localRotation = Quaternion.identity;
+            _currentTool.transform.localScale = Vector3.one;
+            _currentTool.GetComponent<ToolPosition>().Setup(
+                transform.position.x,
+                GetComponent<PlayerMovement>().VerticalPosition
+            );
         }
         _currentTool = null;
         HasTool = false;
