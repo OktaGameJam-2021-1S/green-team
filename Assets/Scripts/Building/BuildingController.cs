@@ -23,9 +23,11 @@ public class BuildingController : MonoBehaviour
     {
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
+        _numInterationsDone = 0;
+
         _floors = new List<BuildingFloor>();
         _buildingNetworkReference = pBuildingData;
-        _numInterationsDone = 0;
+        
         int amount = _buildingNetworkReference.height - 1;
 
         _lastFloorCreated = Instantiate(_baseFloor, _spawnRoot).GetComponent<BuildingFloor>();
@@ -80,6 +82,17 @@ public class BuildingController : MonoBehaviour
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
+    }
+
+    public void ReconstructBuilding()
+    {
+        for (int i = 0; i < _floors.Count; i++)
+        {
+            _floors[i].Reset();
+        }
+        _spawnRoot.gameObject.SetActive(true);
+        _demolishedRoot.gameObject.SetActive(false);
+        _numInterationsDone = 0;
     }
 
     private BuildingFloor GetRandomAvaibleFloor()

@@ -18,6 +18,11 @@ public class BuildingFloor : MonoBehaviour
 
     private void Start()
     {
+        Reset();
+    }
+
+    public void Reset()
+    {
         _renderer.material.SetFloat("_Damage", 0f);
         baseColor.a = 0f;
         _naturalized.color = baseColor;
