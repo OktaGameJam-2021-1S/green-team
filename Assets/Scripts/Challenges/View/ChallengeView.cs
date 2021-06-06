@@ -31,12 +31,12 @@ public class ChallengeView : MonoBehaviour
 
     public void UpdateProgress()
     {
-        int iChallengeProgression = Mathf.Min(ChallengeController.GetChallengeProgression(_ReferenceChallenge), _ReferenceChallenge.Value);
+        int iChallengeProgression = Mathf.Min(ScoreController.GetChallengeProgression(_ReferenceChallenge), _ReferenceChallenge.Value);
         challengeProgressText.text = string.Format(sBaseText, iChallengeProgression, _ReferenceChallenge.Value);
         challengeProgressBar.value = iChallengeProgression;
 
 
-        if (ChallengeController.CheckAmount(_ReferenceChallenge) && !bIsCompleted)
+        if (ScoreController.CheckAmount(_ReferenceChallenge) && !bIsCompleted)
         {
             bIsCompleted = true;
             challengeProgressText.color = Color.green;

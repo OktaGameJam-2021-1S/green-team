@@ -30,7 +30,12 @@ public class ScoreEditor : EditorWindow
     {
         _serializedConfig.Update();
 
-        for(int i = 0; i < _serializedScores.arraySize; i++)
+        EditorGUILayout.PropertyField(_serializedConfig.FindProperty("WinThreshold"));
+        EditorGUILayout.Separator();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
+        for (int i = 0; i < _serializedScores.arraySize; i++)
         {
             VerifyFoldoutList(itemFoldoutRef, i);
             SerializedProperty itemRef = _serializedScores.GetArrayElementAtIndex(i);

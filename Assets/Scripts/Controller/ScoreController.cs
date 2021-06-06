@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChallengeController : MonoBehaviour
+public class ScoreController : MonoBehaviour
 {
 
     public GameConfiguration _configurationAsset;
@@ -58,8 +58,6 @@ public class ChallengeController : MonoBehaviour
                 return -1;
         }
     }
-
-    
 
     private void OnChallengeComplete(Challenge pChallenge)
     {

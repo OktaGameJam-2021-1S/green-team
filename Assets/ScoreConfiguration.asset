@@ -44,4 +44,4 @@ MonoBehaviour:
   - Name: Non-Ideal Building
     ScoreType: 3
     Amount: -3
-  WinThreshold: 0
+  WinThreshold: 30
