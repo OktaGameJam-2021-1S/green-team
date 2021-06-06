@@ -8,11 +8,14 @@ public class BuildingController : MonoBehaviour
     public delegate void DemolishHandler();
     public event DemolishHandler OnDemolish;
 
+    public GameConfiguration _configurationAsset;
+
     [SerializeField] GameObject _baseFloor;
     [SerializeField] GameObject _topFloor;
     [SerializeField] List<GameObject> _variableFloors;
     [SerializeField] private BuildCount _playerCount;
     [SerializeField] private BuildCount _personCount;
+    [SerializeField] private BuildCount _scoreCount;
 
     [SerializeField] Transform _spawnRoot;
     [SerializeField] Transform _demolishedRoot;
@@ -84,6 +87,7 @@ public class BuildingController : MonoBehaviour
 
     public void Setup(BuildingNetwork pBuildingData)
     {
+        _scoreCount.gameObject.SetActive(false);
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
         _maxDamage = pBuildingData.maxDamage;
@@ -277,6 +281,28 @@ public class BuildingController : MonoBehaviour
             if (_floors[i].Interactable) return false;
         }
         return true;
+    }
+
+    public void ShowScore()
+    {
+        _playerCount.gameObject.SetActive(false);
+        _personCount.gameObject.SetActive(false);
+        _alertPlant.SetActive(false);
+        _alertHammer.SetActive(false);
+
+        _scoreCount.gameObject.SetActive(true);
+
+        if (IsIdeal())
+        {
+            Score score = _configurationAsset.Scores.Find(x => (ScoreType)x.ScoreType == ScoreType.IdealBuilding);
+            _scoreCount.SetText(score.Amount.ToString());
+        }
+        else
+        {
+            Score score = _configurationAsset.Scores.Find(x => (ScoreType)x.ScoreType == ScoreType.NonIdealBuilding);
+            _scoreCount.SetText(score.Amount.ToString());
+            _scoreCount.SetColor(Color.red);
+        }
     }
 
 }

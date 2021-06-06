@@ -72,11 +72,11 @@ public class GameController : MonoBehaviour
         pos.m_MinXPosition = -(_buildingDistance / 2f);
         pos.m_MaxXPosition = (lBuildingDatas.Count * _buildingDistance) - (_buildingDistance / 2f);
 
-        for (int i = 0; i < Random.Range(7, 20); i++)
+        for (int i = 0; i < Random.Range(18, 22); i++)
         {
             var toolData = Instantiate(_toolPrefab);
-            ToolType type = (ToolType) (i % 4);
-            if (type == ToolType.Paint) type = i % 2 == 0 ? ToolType.Hammer : ToolType.Seed;
+            ToolType type = (ToolType) (i % 2);
+            if (type == ToolType.Paint) type = ToolType.Seed;
 
             toolData.Setup(new ToolNetwork()
             {
@@ -86,6 +86,23 @@ public class GameController : MonoBehaviour
                 ),
                 verticalPosition = (LayerHeight) Random.Range(0, 2),
                 type = type,
+                uses = 5
+            });
+            _tools.Add(toolData);
+        }
+
+        for (int i = 0; i < Random.Range(2, 4); i++)
+        {
+            var toolData = Instantiate(_toolPrefab);
+
+            toolData.Setup(new ToolNetwork()
+            {
+                horizontalPosition = Random.Range(
+                    pos.m_MinXPosition + 2,
+                    pos.m_MaxXPosition - 2
+                ),
+                verticalPosition = (LayerHeight) Random.Range(0, 2),
+                type = ToolType.AirHorn,
                 uses = 5
             });
             _tools.Add(toolData);

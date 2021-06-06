@@ -13,4 +13,9 @@ public class BuildCount : MonoBehaviour
         _text.text = sText;
     }
 
+    public void SetColor(Color color)
+    {
+        _text.color = color; 
+    }
+
 }
