@@ -58,6 +58,12 @@ public class PlayerInput : MonoBehaviour
         {
             _tool.Use(_playerMovement);
         }
+        else
+        {
+            var building = GameController.Instance.GetBuilding(_playerMovement);
+            building.Yell();
+
+        }
     }
 
     private void PickTool()

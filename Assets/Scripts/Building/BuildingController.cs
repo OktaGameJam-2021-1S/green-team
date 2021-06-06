@@ -37,7 +37,7 @@ public class BuildingController : MonoBehaviour
         {
             int value = 0;
 
-            for(int i = 0; i < _floors.Count; i++)
+            for (int i = 0; i < _floors.Count; i++)
             {
                 value += _floors[i].Graffiti ? 1 : 0;
             }
@@ -87,7 +87,7 @@ public class BuildingController : MonoBehaviour
 
         _floors = new List<BuildingFloor>();
         _buildingNetworkReference = pBuildingData;
-        
+
         int amount = _buildingNetworkReference.height - 1;
 
         _lastFloorCreated = Instantiate(_baseFloor, _spawnRoot).GetComponent<BuildingFloor>();
@@ -157,8 +157,16 @@ public class BuildingController : MonoBehaviour
     {
         if (PeopleInBuilding > 0)
         {
-            Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
-            PeopleInBuilding -= 1;
+            StartCoroutine(AirHornAction());
+        }
+    }
+
+    public void Yell()
+    {
+        if (PeopleInBuilding > 0)
+        {
+            SpawnCitizen();
+            PeopleInBuilding--;
         }
     }
 
@@ -183,7 +191,7 @@ public class BuildingController : MonoBehaviour
     private BuildingFloor GetRandomAvaibleFloor()
     {
         List<BuildingFloor> availablesFloors = new List<BuildingFloor>();
-        for(int i = 0; i < _floors.Count; i++)
+        for (int i = 0; i < _floors.Count; i++)
         {
             if (_floors[i].Interactable)
                 availablesFloors.Add(_floors[i]);
@@ -192,6 +200,29 @@ public class BuildingController : MonoBehaviour
         int index = Random.Range(0, availablesFloors.Count);
 
         return availablesFloors[index];
+    }
+
+    IEnumerator AirHornAction()
+    {
+        float fTime = 0;
+        float fRelease = 0.3f;
+        while (PeopleInBuilding > 0)
+        {
+            if (fTime >= fRelease)
+            {
+                SpawnCitizen();
+                fTime = 0f;
+                PeopleInBuilding--;
+            }
+            fTime += Time.deltaTime;
+            yield return null;
+        }
+
+        PeopleInBuilding -= 1;
+    }
+
+    private void SpawnCitizen() {
+        Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
     }
 
 }
