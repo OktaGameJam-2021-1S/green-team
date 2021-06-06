@@ -22,12 +22,16 @@ public class UITimer : MonoBehaviour
         {
             _textField.text = ConvertSecondsToMinutes(_fDeltaTime);
         }
+        else
+        {
+            OnTimerEnd();
+        }
     }
 
     private void OnTimerEnd()
     {
         _textField.text = ConvertSecondsToMinutes(0);
-        // Trigger GameController to run Score and show evil or good alien.
+        GameController.Instance.GameEnd();
     }
 
     private string ConvertSecondsToMinutes(float fSeconds)

@@ -15,6 +15,9 @@ public class BuildingController : MonoBehaviour
 
     [SerializeField] GameObject _peoplePrefab;
 
+    [SerializeField] GameObject _alertPlant;
+    [SerializeField] GameObject _alertHammer;
+
     private BuildingFloor _lastFloorCreated;
 
     private List<BuildingFloor> _floors;
@@ -24,15 +27,10 @@ public class BuildingController : MonoBehaviour
 
     public int PeopleInBuilding { get; set; }
 
-    private int _numInterationsDone;
+    private int _maxDamage;
+    private int _maxPlant;
 
-    public bool Demolished
-    {
-        get
-        {
-            return _numInterationsDone > _floors.Count;
-        }
-    }
+    public bool Demolished { get; private set; }
 
     public int Graffiti
     {
@@ -84,7 +82,9 @@ public class BuildingController : MonoBehaviour
     {
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
-        _numInterationsDone = 0;
+        _maxDamage = pBuildingData.maxDamage;
+        _maxPlant = pBuildingData.maxPlant;
+
         PlayersInside = new List<PlayerMovement>();
         PeopleInBuilding = pBuildingData.people;
 
@@ -115,6 +115,10 @@ public class BuildingController : MonoBehaviour
         _playerCount.gameObject.transform.position = new Vector3(_playerCount.transform.position.x, topFloor.transform.position.y + 0.3f, _playerCount.transform.position.z);
         _personCount.gameObject.transform.position = new Vector3(_personCount.transform.position.x, topFloor.transform.position.y + 0.3f, _personCount.transform.position.z);
 
+        Vector3 _alertPosition = new Vector3(_alertHammer.transform.position.x, topFloor.transform.position.y + 0.3f, _alertHammer.transform.position.z);
+
+        _alertHammer.transform.position = _alertPlant.transform.position = _alertPosition;
+
         UpdateMarkers();
 
     }
@@ -141,17 +145,20 @@ public class BuildingController : MonoBehaviour
         {
             _playerCount.gameObject.SetActive(false);
         }
+
+        _alertPlant.SetActive((Naturalized + 1 > _maxPlant));
+        _alertHammer.SetActive((DamageTaken + 1 > _maxDamage));
+
     }
 
     public void DealDamageFloor()
     {
-        if (_numInterationsDone >= _buildingNetworkReference.height)
+        if (_maxPlant < DamageTaken)
         {
             DemolishBuilding();
         }
         else
         {
-            _numInterationsDone++;
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.DamageFloor();
         }
@@ -159,13 +166,12 @@ public class BuildingController : MonoBehaviour
 
     public void NaturalizeFloor()
     {
-        if (_numInterationsDone >= _buildingNetworkReference.height)
+        if (_maxPlant < Naturalized)
         {
             DemolishBuilding();
         }
         else
         {
-            _numInterationsDone++;
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.Naturalize();
         }
@@ -173,16 +179,7 @@ public class BuildingController : MonoBehaviour
 
     public void GraffitiFloor()
     {
-        if (_numInterationsDone >= _buildingNetworkReference.height)
-        {
-            DemolishBuilding();
-        }
-        else
-        {
-            _numInterationsDone++;
-            BuildingFloor floor = GetRandomAvaibleFloor();
-            floor.GraffitiFloor();
-        }
+        // WIP
     }
 
     public void AirHorn()
@@ -205,6 +202,7 @@ public class BuildingController : MonoBehaviour
 
     public void DemolishBuilding()
     {
+        Demolished = true;
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
@@ -218,7 +216,7 @@ public class BuildingController : MonoBehaviour
         }
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
-        _numInterationsDone = 0;
+        Demolished = false;
     }
 
     private BuildingFloor GetRandomAvaibleFloor()

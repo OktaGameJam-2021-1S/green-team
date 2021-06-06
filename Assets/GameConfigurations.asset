@@ -20,7 +20,7 @@ MonoBehaviour:
     RewardType: 1
     RewardAmount: 2
   - Name: Naturalize
-    ChallengeType: 1
+    ChallengeType: 3
     Value: 3
     ComparisonType: 2
     RewardType: 1
@@ -45,7 +45,7 @@ MonoBehaviour:
     ScoreType: 3
     Amount: -3
   WinThreshold: 30
-  SecondsToGameEnd: 360
+  SecondsToGameEnd: 10
   BuildingData:
   - id: 1
     width: 0

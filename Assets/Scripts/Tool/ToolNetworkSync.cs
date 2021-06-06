@@ -63,7 +63,7 @@ public class ToolNetworkSync : MonoBehaviour
                 gameObject.SetActive(false);
                 return false;
             }
-            
+            GameController.Instance.UpdateAllChallenges();
         }
         return true;
     }

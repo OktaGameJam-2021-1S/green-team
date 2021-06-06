@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private float _buildingDistance;
 
+    [SerializeField] private ScoreController _scoreController;
+
     public float BuildingDistance => _buildingDistance;
 
     private bool _isFirstGameState;
@@ -128,4 +130,14 @@ public class GameController : MonoBehaviour
         return building;
     }
 
+
+    public void GameEnd()
+    {
+        int i = _scoreController.CalculateFinalScore();
+    }
+
+    public void UpdateAllChallenges()
+    {
+        _scoreController.UpdateChallenges();
+    }
 }

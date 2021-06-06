@@ -96,7 +96,7 @@ public class ScoreController : MonoBehaviour
         }
     }
 
-    private void UpdateChallenges(GameStateNetwork state)
+    public void UpdateChallenges()
     {
         for (int i = 0; i < _actualChallenges.Count; i++)
         {
@@ -200,6 +200,6 @@ public class ScoreController : MonoBehaviour
 
     private static int GetNonIdealBuildings()
     {
-        return GetIdealBuildings() - GameController.Instance.Buildings.Count;
+        return GameController.Instance.Buildings.Count - GetIdealBuildings();
     }
 }

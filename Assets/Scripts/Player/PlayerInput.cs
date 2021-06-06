@@ -62,7 +62,7 @@ public class PlayerInput : MonoBehaviour
         {
             var building = GameController.Instance.GetBuilding(_playerMovement);
             building.Yell();
-
+            GameController.Instance.UpdateAllChallenges();
         }
     }
 
