@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _resultText;
     [SerializeField] private TextMeshProUGUI _resultScore;
 
+    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private Transform _enemyRootSpawn;
+
     public float BuildingDistance => _buildingDistance;
 
     private CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -160,6 +163,9 @@ public class GameController : MonoBehaviour
             pMovement.LeaveBuilding();
             IsGameEnded = true;
         }
+
+        Instantiate(_enemyPrefab).transform.position = _enemyRootSpawn.position;
+
     }
 
     public void UpdateAllChallenges()
