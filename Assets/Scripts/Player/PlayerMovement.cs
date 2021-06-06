@@ -75,9 +75,9 @@ public class PlayerMovement : MonoBehaviour
         {
             _insideBuilding.PlayersInside.Remove(this);
             _insideBuilding.OnDemolish -= HandleBuildingDemolish;
-            _insideBuilding = null;
             _verticalPosition = LayerHeight.Sidewalk;
             _insideBuilding.UpdateMarkers();
+            _insideBuilding = null;
         }
     }
 
