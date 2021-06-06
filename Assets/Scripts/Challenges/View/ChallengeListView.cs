@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ChallengeListView : MonoBehaviour
 {
     [SerializeField] Animator _ListViewAnimator;
-    [SerializeField] Button _ToggleButton;
     [SerializeField] Image _ToggleButtonIcon;
 
     bool bIsEnabled;
@@ -16,7 +15,6 @@ public class ChallengeListView : MonoBehaviour
 
     private void Start()
     {
-        _ToggleButton.onClick.AddListener(ToggleChallengeListView);
         bIsEnabled = false;
     }
 
