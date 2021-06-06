@@ -274,8 +274,6 @@ public class BuildingController : MonoBehaviour
             UpdateMarkers();
             yield return null;
         }
-
-        PeopleInBuilding -= 1;
     }
 
     private void SpawnCitizen() {
