@@ -44,8 +44,11 @@ public class UITimer : MonoBehaviour
 
     private void OnTimerEnd()
     {
-        _textField.text = ConvertSecondsToMinutes(0);
-        if(!GameController.Instance.IsGameEnded) GameController.Instance.GameEnd();
+        if (!GameController.Instance.IsGameEnded)
+        {
+            GameController.Instance.GameEnd();
+            _textField.gameObject.SetActive(false);
+        }
     }
 
     private string ConvertSecondsToMinutes(float fSeconds)
