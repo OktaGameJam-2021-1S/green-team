@@ -38,11 +38,11 @@ public class ToolNetworkSync : MonoBehaviour
         {
             if (_toolSprite.Type == ToolSprite.Tool.Hammer)
             {
-                building.DealDamage();
+                building.DealDamageFloor();
             }
             else if (_toolSprite.Type == ToolSprite.Tool.Seed)
             {
-                building.Seed();
+                building.NaturalizeFloor();
             }
         }
     }

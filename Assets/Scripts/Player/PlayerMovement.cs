@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Animator _playerAnimator;
 
+    private BuildingController _insideBuilding;
+
     private void Awake()
     {
         _verticalPosition = LayerHeight.Sidewalk;
@@ -23,11 +25,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float x, int y)
     {
+        LayerHeight lastLayerHeight = _verticalPosition;
         _verticalPosition = _verticalPosition + y;
         if ((int)_verticalPosition > (int)LayerHeight.Building) _verticalPosition = LayerHeight.Building;
         if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
 
         float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
+
+        if(_verticalPosition == LayerHeight.Building && lastLayerHeight == LayerHeight.Sidewalk)
+        {
+            EnterBuilding();
+        }
+
+        if (_verticalPosition == LayerHeight.Sidewalk && lastLayerHeight == LayerHeight.Building)
+        {
+            LeaveBuilding();
+        }
 
         _speed = x * _moveSpeed;
         _speed = (_verticalPosition == LayerHeight.Building) ? 0 : _speed;
@@ -37,6 +50,24 @@ public class PlayerMovement : MonoBehaviour
 
         
         transform.position = new Vector3(xPos, yPos);
+    }
+
+    private void EnterBuilding()
+    {
+        var building = GameController.Instance.GetBuilding(this);
+        if (building)
+        {
+            building.PlayersInside.Add(this);
+            _insideBuilding = building;
+        }
+    }
+
+    private void LeaveBuilding()
+    {
+        if (_insideBuilding)
+        {
+            _insideBuilding.PlayersInside.Remove(this);
+        }
     }
 
     public void MoveHorizontal(float x)

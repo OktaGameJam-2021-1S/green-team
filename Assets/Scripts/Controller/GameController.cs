@@ -13,20 +13,22 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private float _buildingDistance;
 
+    public float BuildingDistance => _buildingDistance;
+
     private bool _isFirstGameState;
     private Dictionary<int, PlayerNetworkSync> _players;
-    private Dictionary<int, BuildingNetworkSync> _buildings;
+    private Dictionary<int, BuildingController> _buildings;
     private Dictionary<int, ToolNetworkSync> _tools;
 
     public static GameController Instance { get; private set; }
 
     public Dictionary<int, PlayerNetworkSync> Players => _players;
     public Dictionary<int, ToolNetworkSync> Tools => _tools;
-    public List<BuildingNetworkSync> Buildings
+    public List<BuildingController> Buildings
     {
         get
         {
-            List<BuildingNetworkSync> items = new List<BuildingNetworkSync>();
+            List<BuildingController> items = new List<BuildingController>();
             items.AddRange(_buildings.Values);
             return items;
         }
@@ -39,7 +41,7 @@ public class GameController : MonoBehaviour
 
         _isFirstGameState = true;
         _players = new Dictionary<int, PlayerNetworkSync>();
-        _buildings = new Dictionary<int, BuildingNetworkSync>();
+        _buildings = new Dictionary<int, BuildingController>();
         _tools = new Dictionary<int, ToolNetworkSync>();
     }
 
@@ -71,13 +73,13 @@ public class GameController : MonoBehaviour
         _tools.Add(toolData.ID, toolData);
     }
 
-    public BuildingNetworkSync GetBuilding(PlayerMovement movement)
+    public BuildingController GetBuilding(PlayerMovement movement)
     {
         if (movement.VerticalPosition != LayerHeight.Sidewalk) return null;
         var building = Buildings.Find(building => {
             if (building.transform.position.x < movement.transform.position.x)
             {
-                if (building.transform.position.x + building.Width > movement.transform.position.x)
+                if (building.transform.position.x + BuildingDistance > movement.transform.position.x)
                 {
                     return true;   
                 }

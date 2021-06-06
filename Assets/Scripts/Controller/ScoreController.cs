@@ -75,8 +75,6 @@ public class ScoreController : MonoBehaviour
         {
             case ChallengeType.Demolish:
                 return GetDemolishedBuildings();
-            case ChallengeType.Naturalize:
-                return GetNaturalizedBuildings();
             case ChallengeType.Damage:
                 return GetDamageDealt();
             case ChallengeType.GrowPlant:
@@ -121,12 +119,12 @@ public class ScoreController : MonoBehaviour
     private static int GetDemolishedBuildings()
     {
         int demolishedCount = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        BuildingController pBuilding;
+        List<BuildingController> lBuildings = GameController.Instance.Buildings;
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            demolishedCount += (pBuilding.DamageTaken > pBuilding.MaxDamage)? 1: 0;
+            demolishedCount += (pBuilding.Demolished)? 1: 0;
         }
 
         return demolishedCount;
@@ -135,8 +133,8 @@ public class ScoreController : MonoBehaviour
     private static int GetDamageDealt()
     {
         int demolishedCount = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        BuildingController pBuilding;
+        List<BuildingController> lBuildings = GameController.Instance.Buildings;
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
@@ -146,29 +144,15 @@ public class ScoreController : MonoBehaviour
         return demolishedCount;
     }
 
-    private static int GetNaturalizedBuildings()
-    {
-        int naturalizedBuildings = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
-        for (int i = 0; i < lBuildings.Count; i++)
-        {
-            pBuilding = lBuildings[i];
-            naturalizedBuildings += (pBuilding.PlantCount > pBuilding.MaxPlant) ? 1 : 0;
-        }
-
-        return naturalizedBuildings;
-    }
-
     private static int GetPlantCount()
     {
         int plantCount = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        BuildingController pBuilding;
+        List<BuildingController> lBuildings = GameController.Instance.Buildings;
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            plantCount += pBuilding.PlantCount;
+            plantCount += pBuilding.Naturalized;
         }
 
         return plantCount;
@@ -177,12 +161,12 @@ public class ScoreController : MonoBehaviour
     private static int GetGraffitiCount()
     {
         int graffitiCount = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        BuildingController pBuilding;
+        List<BuildingController> lBuildings = GameController.Instance.Buildings;
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            graffitiCount += pBuilding.GraffitiCount;
+            graffitiCount += pBuilding.Graffiti;
         }
 
         return graffitiCount;
@@ -191,12 +175,12 @@ public class ScoreController : MonoBehaviour
     private static int GetPeopleInCity()
     {
         int peopleCount = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        BuildingController pBuilding;
+        List<BuildingController> lBuildings = GameController.Instance.Buildings;
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            peopleCount += pBuilding.Peoples;
+            peopleCount += pBuilding.PeopleInBuilding;
         }
         return peopleCount;
     }
@@ -204,8 +188,8 @@ public class ScoreController : MonoBehaviour
     private static int GetIdealBuildings()
     {
         int idealBuildings = 0;
-        BuildingNetworkSync pBuilding;
-        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        BuildingController pBuilding;
+        List<BuildingController> lBuildings = GameController.Instance.Buildings;
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];

@@ -13,6 +13,11 @@ public class BuildingFloor : MonoBehaviour
 
     public bool Interactable { get; private set; }
 
+    public bool Naturalized { get; private set; }
+
+    public bool Destroyed { get; private set; }
+
+    public bool Graffiti { get; private set; }
 
     Color baseColor = Color.white;
 
@@ -27,12 +32,16 @@ public class BuildingFloor : MonoBehaviour
         baseColor.a = 0f;
         _naturalized.color = baseColor;
         Interactable = true;
+        Naturalized = false;
+        Destroyed = false;
+        Graffiti = false;
     }
 
     public void Naturalize()
     {
         StartCoroutine(NaturalizeAnimation());
         Interactable = false;
+        Naturalized = true;
     }
 
     public void DamageFloor()
@@ -40,6 +49,15 @@ public class BuildingFloor : MonoBehaviour
 
         StartCoroutine(DamageAnimation());
         Interactable = false;
+        Destroyed = true;
+    }
+
+    public void GraffitiFloor()
+    {
+
+        //StartCoroutine(DamageAnimation());
+        Interactable = false;
+        Graffiti = true;
     }
 
     IEnumerator DamageAnimation()

@@ -17,13 +17,70 @@ public class BuildingController : MonoBehaviour
 
     private BuildingNetwork _buildingNetworkReference;
 
+    public int PeopleInBuilding { get; set; }
+
     private int _numInterationsDone;
+
+    public bool Demolished
+    {
+        get
+        {
+            return _numInterationsDone > _floors.Count;
+        }
+    }
+
+    public int Graffiti
+    {
+        get
+        {
+            int value = 0;
+
+            for(int i = 0; i < _floors.Count; i++)
+            {
+                value += _floors[i].Graffiti ? 1 : 0;
+            }
+
+            return value;
+        }
+    }
+    public int Naturalized
+    {
+        get
+        {
+            int value = 0;
+
+            for (int i = 0; i < _floors.Count; i++)
+            {
+                value += _floors[i].Naturalized ? 1 : 0;
+            }
+
+            return value;
+        }
+    }
+
+    public int DamageTaken
+    {
+        get
+        {
+            int value = 0;
+
+            for (int i = 0; i < _floors.Count; i++)
+            {
+                value += _floors[i].Destroyed ? 1 : 0;
+            }
+
+            return value;
+        }
+    }
+
+    public List<PlayerMovement> PlayersInside { get; set; }
 
     public void Setup(BuildingNetwork pBuildingData)
     {
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
         _numInterationsDone = 0;
+        PeopleInBuilding = pBuildingData.people;
 
         _floors = new List<BuildingFloor>();
         _buildingNetworkReference = pBuildingData;
