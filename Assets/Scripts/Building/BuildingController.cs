@@ -80,6 +80,7 @@ public class BuildingController : MonoBehaviour
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
         _numInterationsDone = 0;
+        PlayersInside = new List<PlayerMovement>();
         PeopleInBuilding = pBuildingData.people;
 
         _floors = new List<BuildingFloor>();

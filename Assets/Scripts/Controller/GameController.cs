@@ -51,13 +51,14 @@ public class GameController : MonoBehaviour
         _players.Add(player.ID, player);
 
         BuildingController building;
-        List<BuildingNetwork> _buildings = _gameConfig.BuildingData;
+        List<BuildingNetwork> lBuildingDatas = _gameConfig.BuildingData;
         int x = 0;
-        for (int i = 0; i < _buildings.Count; i++)
+        for (int i = 0; i < lBuildingDatas.Count; i++)
         {
             building = Instantiate(_buildingPrefab);
             building.transform.position = new Vector3(0 + _buildingDistance * i, 0, 0f);
-            building.Setup(_buildings[i]);
+            building.Setup(lBuildingDatas[i]);
+            _buildings.Add(lBuildingDatas[i].id, building);
         }
 
         var toolData = Instantiate(_toolPrefab);
@@ -75,11 +76,11 @@ public class GameController : MonoBehaviour
 
     public BuildingController GetBuilding(PlayerMovement movement)
     {
-        if (movement.VerticalPosition != LayerHeight.Sidewalk) return null;
+        if (movement.VerticalPosition == LayerHeight.Street) return null;
         var building = Buildings.Find(building => {
-            if (building.transform.position.x < movement.transform.position.x)
+            if ((building.transform.position.x - BuildingDistance/2) < movement.transform.position.x)
             {
-                if (building.transform.position.x + BuildingDistance > movement.transform.position.x)
+                if (building.transform.position.x + BuildingDistance/2 > movement.transform.position.x)
                 {
                     return true;   
                 }
