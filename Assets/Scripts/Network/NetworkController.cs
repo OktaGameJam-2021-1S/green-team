@@ -12,6 +12,15 @@ public class NetworkController : MonoBehaviour
     public delegate void GameStateHandler(GameStateNetwork state);
     public event GameStateHandler OnGameState;
 
+    public enum GameStatus
+    {
+        Menu,
+        PreStart,
+        Game
+    }
+
+    public GameStatus CurrentGameStatus { get; private set; }
+
     [SerializeField] private string _url = "http://localhost:3000";
 
     private QSocket _socket;
@@ -20,14 +29,38 @@ public class NetworkController : MonoBehaviour
     private NetworkPlayerInput _playerInput;
 
     private bool _connected;
+    private string _deviceId;
+
+    private bool _loadGameScene;
 
     protected virtual void Awake()
     {
+        Debug.Log("NetworkController?");
         DontDestroyOnLoad(gameObject);
         Instance = this;
 
+        _deviceId = PlayerPrefs.GetString("DEVICE_ID", System.Guid.NewGuid().ToString());
+        PlayerPrefs.SetString("DEVICE_ID", _deviceId);
+
         _inputNetwork = new PlayerInputNetwork();
         _playerInput = GetComponent<NetworkPlayerInput>();
+
+        CurrentGameStatus = GameStatus.Menu;
+    }
+
+    public void CreateRoom(string name)
+    {
+        _socket.Emit("create_room", "{\"roomName\": \"" + name + "\"}");
+    }
+
+    public void EnterRoom(string name)
+    {
+        _socket.Emit("enter_room", "{\"roomName\": \"" + name + "\"}");
+    }
+
+    public void StartGame()
+    {
+        _socket.Emit("start_game", "");
     }
 
     protected virtual void Start()
@@ -40,6 +73,18 @@ public class NetworkController : MonoBehaviour
         _socket.On (QSocket.EVENT_CONNECT, () => {
             Debug.Log ("Connected");
             _connected = true;
+            // _socket.Emit("create_user", "{\"device_id\": \"" + _deviceId + "\"}");
+            
+            _socket.On("game_pre_start", () => {
+                Debug.Log("game_pre_start");
+                _loadGameScene = true;
+                CurrentGameStatus = GameStatus.PreStart;
+            });
+            _socket.On("game_start", () => {
+                Debug.Log("game_start");
+                CurrentGameStatus = GameStatus.Game;
+            });
+
             _socket.On("player_connect", HandlePlayerConnect);
             _socket.On("game_state", HandleGameState);
         });
@@ -63,6 +108,15 @@ public class NetworkController : MonoBehaviour
         _socket.On (QSocket.EVENT_MESSAGE, () => {
             Debug.Log ("EVENT_MESSAGE");
         });
+    }
+
+    private void Update()
+    {
+        if (_loadGameScene)
+        {
+            _loadGameScene = false;
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GamePrototype");
+        }
     }
 
     private void HandlePlayerConnect(object data)
@@ -130,6 +184,7 @@ public class NetworkController : MonoBehaviour
     private IEnumerator SendInputCoroutine()
     {
         yield return new WaitUntil(() => _connected);
+        yield return new WaitUntil(() => CurrentGameStatus == NetworkController.GameStatus.Game);
         while (true)
         {
             yield return new WaitForSeconds(.1f);

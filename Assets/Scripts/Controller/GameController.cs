@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("GameController?");
         NetworkController.Instance.OnGameState += HandleGameState;
     }
 
