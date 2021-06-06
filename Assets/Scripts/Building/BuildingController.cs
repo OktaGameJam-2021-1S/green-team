@@ -157,7 +157,7 @@ public class BuildingController : MonoBehaviour
 
     public void DealDamageFloor()
     {
-        if (_maxPlant < DamageTaken)
+        if (_maxPlant <= DamageTaken)
         {
             DemolishBuilding();
         }
@@ -165,12 +165,13 @@ public class BuildingController : MonoBehaviour
         {
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.DamageFloor();
+            UpdateMarkers();
         }
     }
 
     public void NaturalizeFloor()
     {
-        if (_maxPlant < Naturalized)
+        if (_maxPlant <= Naturalized)
         {
             DemolishBuilding();
         }
@@ -178,6 +179,7 @@ public class BuildingController : MonoBehaviour
         {
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.Naturalize();
+            UpdateMarkers();
         }
     }
 
@@ -210,7 +212,7 @@ public class BuildingController : MonoBehaviour
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
-
+        UpdateMarkers();
         OnDemolish?.Invoke();
     }
 
