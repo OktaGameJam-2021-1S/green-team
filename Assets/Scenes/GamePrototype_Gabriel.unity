@@ -553,7 +553,7 @@ MonoBehaviour:
   _actualChallenges: []
   _actualPoints: 0
   _challengeViewPrefab: {fileID: 3204340169444663068, guid: bfe5179202efb254a834987df7464afc, type: 3}
-  _ChallengelistRoot: {fileID: 1451579150}
+  _ChallengelistRoot: {fileID: 1766849126}
 --- !u!1001 &1451579149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,6 +564,10 @@ PrefabInstance:
     - target: {fileID: 2688691128387510080, guid: 591d759f794a4b3479f6115ed6fd0b67, type: 3}
       propertyPath: m_Name
       value: Challenges
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860220140036701558, guid: 591d759f794a4b3479f6115ed6fd0b67, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7184870006476498716, guid: 591d759f794a4b3479f6115ed6fd0b67, type: 3}
       propertyPath: m_Pivot.x
@@ -707,6 +711,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 4
   m_AspectRatio: 1
+--- !u!224 &1766849126 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2860220140243980915, guid: 591d759f794a4b3479f6115ed6fd0b67, type: 3}
+  m_PrefabInstance: {fileID: 1451579149}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1883841016
 GameObject:
   m_ObjectHideFlags: 0
