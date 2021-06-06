@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _buildingDistance;
 
     [SerializeField] private ScoreController _scoreController;
+
+    [SerializeField] private GameObject _resultPanel;
+    [SerializeField] private TextMeshProUGUI _resultText;
+    [SerializeField] private TextMeshProUGUI _resultScore;
 
     public float BuildingDistance => _buildingDistance;
 
@@ -52,6 +57,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        _resultPanel.SetActive(false);
 
         var player = Instantiate(_playerPrefab);
         _players.Add(player.ID, player);
@@ -131,7 +137,20 @@ public class GameController : MonoBehaviour
 
     public void GameEnd()
     {
-        int i = _scoreController.CalculateFinalScore();
+        int pTotalScore = _scoreController.CalculateFinalScore();
+        
+        
+        if(pTotalScore >= _gameConfig.WinThreshold)
+        {
+            _resultText.text = "Win";
+            
+        }
+        else
+        {
+            _resultText.text = "Lose";
+        }
+        _resultPanel.SetActive(true);
+        _resultScore.text = pTotalScore.ToString();
     }
 
     public void UpdateAllChallenges()
