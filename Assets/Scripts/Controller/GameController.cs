@@ -6,8 +6,12 @@ public class GameController : MonoBehaviour
 {
     
     [SerializeField] private PlayerNetworkSync _playerPrefab = default;
-    [SerializeField] private BuildingNetworkSync _buildingPrefab = default;
+    [SerializeField] private BuildingController _buildingPrefab = default;
     [SerializeField] private ToolNetworkSync _toolPrefab = default;
+
+    [SerializeField] private GameConfiguration _gameConfig;
+
+    [SerializeField] private float _buildingDistance;
 
     private bool _isFirstGameState;
     private Dictionary<int, PlayerNetworkSync> _players;
@@ -44,29 +48,14 @@ public class GameController : MonoBehaviour
         var player = Instantiate(_playerPrefab);
         _players.Add(player.ID, player);
 
-        BuildingNetworkSync buildData;
+        BuildingController building;
+        List<BuildingNetwork> _buildings = _gameConfig.BuildingData;
         int x = 0;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < _buildings.Count; i++)
         {
-            buildData = Instantiate(_buildingPrefab);
-            int width = Random.Range(1, 4);
-            int height = Random.Range(1, 3);
-            buildData.Sync(new BuildingNetwork()
-            {
-                id = i,
-                x = x,
-                width = width,
-                height = height,
-                color = "#ffcc00",
-                damage = 0,
-                plant = 0,
-                graffiti = 0,
-                maxDamage = 5,
-                maxPlant = 5,
-                people = 5,
-            });
-            x += width;
-            _buildings.Add(buildData.ID, buildData);
+            building = Instantiate(_buildingPrefab);
+            building.transform.position = new Vector3(0 + _buildingDistance * i, 0);
+            building.Setup(_buildings[i]);
         }
 
         var toolData = Instantiate(_toolPrefab);

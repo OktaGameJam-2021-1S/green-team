@@ -20,6 +20,7 @@ public class BuildingController : MonoBehaviour
 
     public void Setup(BuildingNetwork pBuildingData)
     {
+        _floors = new List<BuildingFloor>();
         _buildingNetworkReference = pBuildingData;
         _numInterationsDone = 0;
         int amount = _buildingNetworkReference.height - 1;
@@ -35,16 +36,15 @@ public class BuildingController : MonoBehaviour
             var prefab = _variableFloors[index];
 
             var spawned = Instantiate(prefab, _spawnRoot);
-            spawned.transform.position = new Vector3(spawned.transform.position.x, _lastFloorCreated.transform.position.y + (_lastFloorCreated.Collider.size.y*_lastFloorCreated.transform.localScale.y), spawned.transform.position.z);
+            spawned.transform.position = new Vector3(spawned.transform.position.x, _lastFloorCreated.transform.position.y + (_lastFloorCreated.Collider.size.y * _lastFloorCreated.transform.localScale.y * transform.localScale.y), spawned.transform.position.z);
             _lastFloorCreated = spawned.GetComponent<BuildingFloor>();
             _floors.Add(_lastFloorCreated);
         }
 
         var topFloor = Instantiate(_topFloor, _spawnRoot);
-        topFloor.transform.position = new Vector3(topFloor.transform.position.x, _lastFloorCreated.transform.position.y + (_lastFloorCreated.Collider.size.y * _lastFloorCreated.transform.localScale.y), topFloor.transform.position.z);
+        topFloor.transform.position = new Vector3(topFloor.transform.position.x, _lastFloorCreated.transform.position.y + (_lastFloorCreated.Collider.size.y * _lastFloorCreated.transform.localScale.y * transform.localScale.y), topFloor.transform.position.z);
 
     }
-
 
     public void DealDamageFloor()
     {
@@ -91,11 +91,6 @@ public class BuildingController : MonoBehaviour
         return availablesFloors[index];
 
 
-    }
-
-    private void Start()
-    {
-        //Setup(new BuildingNetwork());
     }
 
 }

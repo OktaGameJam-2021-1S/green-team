@@ -506,8 +506,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 116803591267303411, guid: 32ba0d8d1217ed64b8e407611c417113, type: 3}
-  _buildingPrefab: {fileID: 3497578864218232454, guid: f31829d526f2be944aadb5aaafad5578, type: 3}
+  _buildingPrefab: {fileID: 8687467944770679112, guid: 13974d5550b07754dbab4e836abe9185, type: 3}
   _toolPrefab: {fileID: 7876688375490564836, guid: 3088c64068431954caad3aa5732edd58, type: 3}
+  _gameConfig: {fileID: 11400000, guid: 53c955d13ef3fd24f9c821585423c48a, type: 2}
+  _buildingDistance: 2.25
 --- !u!114 &1431779835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -975,6 +977,10 @@ PrefabInstance:
     - target: {fileID: 8687467944770679114, guid: 13974d5550b07754dbab4e836abe9185, type: 3}
       propertyPath: m_Name
       value: Building_AutoGenerate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687467944770679114, guid: 13974d5550b07754dbab4e836abe9185, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8687467944770679115, guid: 13974d5550b07754dbab4e836abe9185, type: 3}
       propertyPath: m_RootOrder
