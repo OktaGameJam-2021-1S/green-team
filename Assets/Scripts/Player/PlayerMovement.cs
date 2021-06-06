@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         float xPos = transform.position.x + (_speed * Time.deltaTime);
 
-        
+        xPos = Mathf.Clamp(xPos, GameController.Instance.MinWorldBounds + 1, GameController.Instance.MaxWorldBounds - 1);
         transform.position = new Vector3(xPos, yPos);
     }
 

@@ -23,6 +23,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private Transform _enemyRootSpawn;
 
+    public float MinWorldBounds;
+    public float MaxWorldBounds;
+
     public float BuildingDistance => _buildingDistance;
 
     private CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -82,6 +85,8 @@ public class GameController : MonoBehaviour
         LockCameraY pos = cinemachineVirtualCamera.GetComponent<LockCameraY>();
         pos.m_MinXPosition = -(_buildingDistance / 2f);
         pos.m_MaxXPosition = (lBuildingDatas.Count * _buildingDistance) - (_buildingDistance / 2f);
+        MinWorldBounds = pos.m_MinXPosition;
+        MaxWorldBounds = pos.m_MaxXPosition;
 
         for (int i = 0; i < Random.Range(18, 22); i++)
         {

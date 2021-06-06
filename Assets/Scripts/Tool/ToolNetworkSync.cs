@@ -13,6 +13,7 @@ public enum ToolType
 public class ToolNetworkSync : MonoBehaviour
 {
 
+    [SerializeField] private GenericDictionary<ToolType, AudioClip> _toolSfx = default;
     private ToolPosition _position;
     public ToolPosition Position => _position;
 
@@ -24,10 +25,13 @@ public class ToolNetworkSync : MonoBehaviour
 
     public bool IsUsable => _uses > 0;
 
+    private AudioSource _source;
+
     private void Awake()
     {
         _position = GetComponent<ToolPosition>();
         _toolSprite = GetComponent<ToolSprite>();
+        _source = GetComponent<AudioSource>();
     }
     
     public void Setup(ToolNetwork network)
@@ -57,6 +61,12 @@ public class ToolNetworkSync : MonoBehaviour
         else if (_toolSprite.Type == ToolType.AirHorn)
         {
             building.AirHorn();
+        }
+
+        // Play a sound
+        if (_toolSfx.ContainsKey(_toolSprite.Type))
+        {
+            _source.PlayOneShot(_toolSfx[_toolSprite.Type]);
         }
 
         if (_uses <= 0)
