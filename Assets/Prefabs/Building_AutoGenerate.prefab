@@ -82,6 +82,7 @@ MonoBehaviour:
   - {fileID: 9203395341644999880, guid: 7c425936acc04924c8132fbbad08736a, type: 3}
   _spawnRoot: {fileID: 8687467944880389309}
   _demolishedRoot: {fileID: 662405805}
+  _peoplePrefab: {fileID: 2908194421170883720, guid: 5253018270adf0a4e9a9e1e8f709e961, type: 3}
 --- !u!1 &8687467944880389308
 GameObject:
   m_ObjectHideFlags: 0

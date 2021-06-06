@@ -14,6 +14,9 @@ public class ToolNetworkSync : MonoBehaviour
     private ToolSprite _toolSprite;
     private ToolSprite ToolSprite => _toolSprite;
 
+    private int _uses;
+    public int Uses => _uses;
+
     private void Awake()
     {
         _movement = GetComponent<PlayerMovement>();
@@ -24,6 +27,7 @@ public class ToolNetworkSync : MonoBehaviour
     {
         _id = network.id;
         _toolSprite.Construct((ToolSprite.Tool)network.type);
+        _uses = network.uses;
         if (!network.isHold)
         {
             _movement.MoveHorizontal(network.x);
@@ -31,11 +35,12 @@ public class ToolNetworkSync : MonoBehaviour
         }
     }
 
-    public void UseTool(PlayerMovement movement)
+    public bool UseTool(PlayerMovement movement)
     {
         var building = GameController.Instance.GetBuilding(movement);
         if (building)
         {
+            _uses -= 1;
             if (_toolSprite.Type == ToolSprite.Tool.Hammer)
             {
                 building.DealDamageFloor();
@@ -44,6 +49,22 @@ public class ToolNetworkSync : MonoBehaviour
             {
                 building.NaturalizeFloor();
             }
+            else if (_toolSprite.Type == ToolSprite.Tool.Paint)
+            {
+                building.GraffitiFloor();
+            }
+            else if (_toolSprite.Type == ToolSprite.Tool.AirHorn)
+            {
+                building.AirHorn();
+            }
+
+            if (_uses <= 0)
+            {
+                gameObject.SetActive(false);
+                return false;
+            }
+            
         }
+        return true;
     }
 }

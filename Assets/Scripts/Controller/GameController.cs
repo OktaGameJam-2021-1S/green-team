@@ -72,6 +72,42 @@ public class GameController : MonoBehaviour
             isHold = false
         });
         _tools.Add(toolData.ID, toolData);
+
+        toolData = Instantiate(_toolPrefab);
+        toolData.Sync(new ToolNetwork()
+        {
+            id = 1,
+            x = 7,
+            y = 1,
+            type = (int)ToolSprite.Tool.Seed,
+            uses = 5,
+            isHold = false
+        });
+        _tools.Add(toolData.ID, toolData);
+
+        toolData = Instantiate(_toolPrefab);
+        toolData.Sync(new ToolNetwork()
+        {
+            id = 2,
+            x = 8,
+            y = 1,
+            type = (int)ToolSprite.Tool.Paint,
+            uses = 5,
+            isHold = false
+        });
+        _tools.Add(toolData.ID, toolData);
+
+        toolData = Instantiate(_toolPrefab);
+        toolData.Sync(new ToolNetwork()
+        {
+            id = 3,
+            x = 2,
+            y = 0,
+            type = (int)ToolSprite.Tool.AirHorn,
+            uses = 5,
+            isHold = false
+        });
+        _tools.Add(toolData.ID, toolData);
     }
 
     public BuildingController GetBuilding(PlayerMovement movement)

@@ -11,6 +11,8 @@ public class BuildingController : MonoBehaviour
     [SerializeField] Transform _spawnRoot;
     [SerializeField] Transform _demolishedRoot;
 
+    [SerializeField] GameObject _peoplePrefab;
+
     private BuildingFloor _lastFloorCreated;
 
     private List<BuildingFloor> _floors;
@@ -111,12 +113,13 @@ public class BuildingController : MonoBehaviour
 
     public void DealDamageFloor()
     {
-        if (_numInterationsDone > _buildingNetworkReference.height)
+        if (_numInterationsDone >= _buildingNetworkReference.height)
         {
             DemolishBuilding();
         }
         else
         {
+            _numInterationsDone++;
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.DamageFloor();
         }
@@ -124,14 +127,38 @@ public class BuildingController : MonoBehaviour
 
     public void NaturalizeFloor()
     {
-        if (_numInterationsDone > _buildingNetworkReference.height)
+        if (_numInterationsDone >= _buildingNetworkReference.height)
         {
             DemolishBuilding();
         }
         else
         {
+            _numInterationsDone++;
             BuildingFloor floor = GetRandomAvaibleFloor();
             floor.Naturalize();
+        }
+    }
+
+    public void GraffitiFloor()
+    {
+        if (_numInterationsDone >= _buildingNetworkReference.height)
+        {
+            DemolishBuilding();
+        }
+        else
+        {
+            _numInterationsDone++;
+            BuildingFloor floor = GetRandomAvaibleFloor();
+            floor.GraffitiFloor();
+        }
+    }
+
+    public void AirHorn()
+    {
+        if (PeopleInBuilding > 0)
+        {
+            Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
+            PeopleInBuilding -= 1;
         }
     }
 
@@ -165,8 +192,6 @@ public class BuildingController : MonoBehaviour
         int index = Random.Range(0, availablesFloors.Count);
 
         return availablesFloors[index];
-
-
     }
 
 }

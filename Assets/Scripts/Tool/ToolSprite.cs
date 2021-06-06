@@ -9,7 +9,8 @@ public class ToolSprite : MonoBehaviour
     {
         Hammer = 0,
         Paint = 1,
-        Seed = 2
+        Seed = 2,
+        AirHorn = 3,
     }
 
     [SerializeField] private GenericDictionary<Tool, Sprite> _toolSprites = default;

@@ -30,7 +30,8 @@ public class PlayerTool : MonoBehaviour
 
     public void Use(PlayerMovement movement)
     {
-        _currentTool.UseTool(movement);
+        bool isAvailable = _currentTool.UseTool(movement);
+        if (!isAvailable) DropTool();
     }
 
 }

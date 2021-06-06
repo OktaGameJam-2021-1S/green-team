@@ -54,7 +54,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Use()
     {
-        if (_player.HasTool)
+        if (_tool.HasTool)
         {
             _tool.Use(_playerMovement);
         }
@@ -62,7 +62,7 @@ public class PlayerInput : MonoBehaviour
 
     private void PickTool()
     {
-        if (_player.Tool.HasTool)
+        if (_tool.HasTool)
         {
             DropTool();
             return;
@@ -71,8 +71,8 @@ public class PlayerInput : MonoBehaviour
         foreach (var toolKeyPair in _controller.Tools)
         {
             var toolSync = toolKeyPair.Value;
-            if (toolSync.Movement.VerticalPosition != _player.Movement.VerticalPosition) continue;
-            if (Vector3.Distance(toolSync.transform.position, _player.transform.position) < .5f)
+            if (toolSync.Movement.VerticalPosition != _playerMovement.VerticalPosition) continue;
+            if (Vector3.Distance(toolSync.transform.position, transform.position) < .5f)
             {
                 _tool.HoldTool(toolSync);
                 break;
@@ -82,6 +82,7 @@ public class PlayerInput : MonoBehaviour
 
     public void DropTool()
     {
+        _tool.DropTool();
     }
 
 }
