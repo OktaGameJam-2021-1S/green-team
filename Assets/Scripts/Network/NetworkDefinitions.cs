@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class PlayerNetwork
     public int toolId;
 }
 
+[Serializable]
 public class BuildingNetwork
 {
     public int id;

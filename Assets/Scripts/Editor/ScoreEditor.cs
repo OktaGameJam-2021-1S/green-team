@@ -36,6 +36,15 @@ public class ScoreEditor : EditorWindow
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
+        if(GUILayout.Button("Import Data"))
+        {
+            ImportData();
+        }
+
+        EditorGUILayout.Separator();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
         for (int i = 0; i < _serializedScores.arraySize; i++)
         {
             VerifyFoldoutList(itemFoldoutRef, i);
@@ -94,6 +103,28 @@ public class ScoreEditor : EditorWindow
         while (pList.Count <= pCurrentIndex)
         {
             pList.Add(false);
+        }
+    }
+
+    private void ImportData()
+    {
+        _configurationAsset.BuildingData = new List<BuildingNetwork>();
+        string sConvertedString = EditorGUIUtility.systemCopyBuffer.Replace("\t", ",");
+        string[] sLinesArray = sConvertedString.Split('\n');
+        for (int i = 0; i < sLinesArray.Length; i++)
+        {
+            string[] sStringItem = sLinesArray[i].Split(',');
+            if (sStringItem[0].Equals("Building ID")) continue;
+            BuildingNetwork pNewItem = new BuildingNetwork();
+            pNewItem.id = i;
+            pNewItem.color = sStringItem[1];
+            pNewItem.height = int.Parse(sStringItem[2]);
+            pNewItem.maxDamage = int.Parse(sStringItem[3]);
+            pNewItem.maxPlant = int.Parse(sStringItem[4]);
+            pNewItem.people = int.Parse(sStringItem[5]);
+            _configurationAsset.BuildingData.Add(pNewItem);
+
+
         }
     }
 

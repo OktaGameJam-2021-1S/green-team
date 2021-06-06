@@ -24,6 +24,11 @@ public class UITimer : MonoBehaviour
         }
     }
 
+    private void OnTimerEnd()
+    {
+        _textField.text = ConvertSecondsToMinutes(0);
+        // Trigger GameController to run Score and show evil or good alien.
+    }
 
     private string ConvertSecondsToMinutes(float fSeconds)
     {

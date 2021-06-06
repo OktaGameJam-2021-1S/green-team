@@ -11,4 +11,6 @@ public class GameConfiguration : ScriptableObject
 
     public float SecondsToGameEnd;
 
+    public List<BuildingNetwork> BuildingData;
+
 }
