@@ -228,6 +228,8 @@ public class BuildingController : MonoBehaviour
         _topFloor.GetComponent<SpriteRenderer>().color = Color.gray;
         UpdateMarkers();
         OnDemolish?.Invoke();
+
+        GetComponent<AudioSource>().Play();
     }
 
     public void ReconstructBuilding()
