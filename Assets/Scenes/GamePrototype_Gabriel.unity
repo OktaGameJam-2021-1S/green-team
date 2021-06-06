@@ -726,6 +726,7 @@ MonoBehaviour:
   _gameConfig: {fileID: 11400000, guid: 53c955d13ef3fd24f9c821585423c48a, type: 2}
   _screenCollider: {fileID: 0}
   _buildingDistance: 2.25
+  _scoreController: {fileID: 1431779835}
 --- !u!114 &1431779835
 MonoBehaviour:
   m_ObjectHideFlags: 0

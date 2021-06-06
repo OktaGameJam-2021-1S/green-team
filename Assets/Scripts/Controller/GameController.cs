@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameConfiguration _gameConfig;
     [SerializeField] private float _buildingDistance;
 
+    [SerializeField] private ScoreController _scoreController;
+
     public float BuildingDistance => _buildingDistance;
 
     private CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -134,4 +136,14 @@ public class GameController : MonoBehaviour
         return building;
     }
 
+
+    public void GameEnd()
+    {
+        int i = _scoreController.CalculateFinalScore();
+    }
+
+    public void UpdateAllChallenges()
+    {
+        _scoreController.UpdateChallenges();
+    }
 }
