@@ -88,6 +88,7 @@ public class PlayerInput : MonoBehaviour
 
     public void DropTool()
     {
+        if (_playerMovement.InsideBuilding) return;
         _tool.DropTool();
     }
 

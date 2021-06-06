@@ -33,6 +33,7 @@ public class ToolNetworkSync : MonoBehaviour
     public void Setup(ToolNetwork network)
     {
         _toolSprite.Construct(network.type);
+        gameObject.name = network.type.ToString();
         _uses = network.uses;
         _position.Setup(network.horizontalPosition, network.verticalPosition);
     }
