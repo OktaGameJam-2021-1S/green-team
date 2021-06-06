@@ -11,6 +11,8 @@ public class BuildingController : MonoBehaviour
     [SerializeField] GameObject _baseFloor;
     [SerializeField] GameObject _topFloor;
     [SerializeField] List<GameObject> _variableFloors;
+    [SerializeField] private BuildCount _playerCount;
+    [SerializeField] private BuildCount _personCount;
 
     [SerializeField] Transform _spawnRoot;
     [SerializeField] Transform _demolishedRoot;
@@ -22,6 +24,7 @@ public class BuildingController : MonoBehaviour
     private List<BuildingFloor> _floors;
 
     private BuildingNetwork _buildingNetworkReference;
+
 
     public int PeopleInBuilding { get; set; }
 
@@ -41,7 +44,7 @@ public class BuildingController : MonoBehaviour
         {
             int value = 0;
 
-            for(int i = 0; i < _floors.Count; i++)
+            for (int i = 0; i < _floors.Count; i++)
             {
                 value += _floors[i].Graffiti ? 1 : 0;
             }
@@ -91,7 +94,7 @@ public class BuildingController : MonoBehaviour
 
         _floors = new List<BuildingFloor>();
         _buildingNetworkReference = pBuildingData;
-        
+
         int amount = _buildingNetworkReference.height - 1;
 
         _lastFloorCreated = Instantiate(_baseFloor, _spawnRoot).GetComponent<BuildingFloor>();
@@ -113,6 +116,35 @@ public class BuildingController : MonoBehaviour
         var topFloor = Instantiate(_topFloor, _spawnRoot);
         topFloor.transform.position = new Vector3(topFloor.transform.position.x, _lastFloorCreated.transform.position.y + (_lastFloorCreated.Collider.size.y * _lastFloorCreated.transform.localScale.y * transform.localScale.y), topFloor.transform.position.z);
 
+        _playerCount.gameObject.transform.position = new Vector3(_playerCount.transform.position.x, topFloor.transform.position.y + 0.3f, _playerCount.transform.position.z);
+        _personCount.gameObject.transform.position = new Vector3(_personCount.transform.position.x, topFloor.transform.position.y + 0.3f, _personCount.transform.position.z);
+
+        UpdateMarkers();
+
+    }
+
+    public void UpdateMarkers()
+    {
+        if(PeopleInBuilding > 0)
+        {
+            _personCount.gameObject.SetActive(true);
+            _personCount.SetText(PeopleInBuilding.ToString());
+        }
+        else
+        {
+            _personCount.gameObject.SetActive(false);
+        }
+
+
+        if (PlayersInside.Count > 0)
+        {
+            _playerCount.gameObject.SetActive(true);
+            _playerCount.SetText(PlayersInside.Count.ToString());
+        }
+        else
+        {
+            _playerCount.gameObject.SetActive(false);
+        }
     }
 
     public void DealDamageFloor()
@@ -161,8 +193,17 @@ public class BuildingController : MonoBehaviour
     {
         if (PeopleInBuilding > 0)
         {
-            Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
-            PeopleInBuilding -= 1;
+            StartCoroutine(AirHornAction());
+        }
+    }
+
+    public void Yell()
+    {
+        if (PeopleInBuilding > 0)
+        {
+            SpawnCitizen();
+            PeopleInBuilding--;
+            UpdateMarkers();
         }
     }
 
@@ -189,7 +230,7 @@ public class BuildingController : MonoBehaviour
     private BuildingFloor GetRandomAvaibleFloor()
     {
         List<BuildingFloor> availablesFloors = new List<BuildingFloor>();
-        for(int i = 0; i < _floors.Count; i++)
+        for (int i = 0; i < _floors.Count; i++)
         {
             if (_floors[i].Interactable)
                 availablesFloors.Add(_floors[i]);
@@ -198,6 +239,30 @@ public class BuildingController : MonoBehaviour
         int index = Random.Range(0, availablesFloors.Count);
 
         return availablesFloors[index];
+    }
+
+    IEnumerator AirHornAction()
+    {
+        float fTime = 0;
+        float fRelease = 0.3f;
+        while (PeopleInBuilding > 0)
+        {
+            if (fTime >= fRelease)
+            {
+                SpawnCitizen();
+                fTime = 0f;
+                PeopleInBuilding--;
+            }
+            fTime += Time.deltaTime;
+            UpdateMarkers();
+            yield return null;
+        }
+
+        PeopleInBuilding -= 1;
+    }
+
+    private void SpawnCitizen() {
+        Instantiate(_peoplePrefab, transform.position, Quaternion.identity);
     }
 
 }

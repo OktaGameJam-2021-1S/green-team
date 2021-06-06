@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameController : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private ToolNetworkSync _toolPrefab = default;
 
     [SerializeField] private GameConfiguration _gameConfig;
-
     [SerializeField] private float _buildingDistance;
 
     public float BuildingDistance => _buildingDistance;
+
+    private CinemachineVirtualCamera cinemachineVirtualCamera;
 
     private bool _isFirstGameState;
     private Dictionary<int, PlayerNetworkSync> _players;
@@ -47,12 +49,15 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+
         var player = Instantiate(_playerPrefab);
         _players.Add(player.ID, player);
 
+        cinemachineVirtualCamera.Follow = player.transform;
+
         BuildingController building;
         List<BuildingNetwork> lBuildingDatas = _gameConfig.BuildingData;
-        int x = 0;
         for (int i = 0; i < lBuildingDatas.Count; i++)
         {
             building = Instantiate(_buildingPrefab);
@@ -60,6 +65,10 @@ public class GameController : MonoBehaviour
             building.Setup(lBuildingDatas[i]);
             _buildings.Add(lBuildingDatas[i].id, building);
         }
+
+        LockCameraY pos = cinemachineVirtualCamera.GetComponent<LockCameraY>();
+        pos.m_MinXPosition = -(_buildingDistance / 2f);
+        pos.m_MaxXPosition = (lBuildingDatas.Count * _buildingDistance) - (_buildingDistance / 2f);
 
         var toolData = Instantiate(_toolPrefab);
         toolData.Setup(new ToolNetwork()

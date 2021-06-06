@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
             building.PlayersInside.Add(this);
             _insideBuilding = building;
             _insideBuilding.OnDemolish += HandleBuildingDemolish;
+            building.UpdateMarkers();
         }
         else
         {
@@ -76,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             _insideBuilding.OnDemolish -= HandleBuildingDemolish;
             _insideBuilding = null;
             _verticalPosition = LayerHeight.Sidewalk;
+            _insideBuilding.UpdateMarkers();
         }
     }
 
