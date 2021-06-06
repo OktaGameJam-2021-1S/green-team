@@ -32,7 +32,7 @@ public class PopulationController : MonoBehaviour
         _charAnimator.SetFloat("Offset", Random.Range(0f, 1f));
 
         //Random height (y position)
-        float height = Random.Range(-_randomHeight, 0f);
+        float height = Random.Range(-_randomHeight, 0f) - 0.4f;
         transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z + 1f + height);
     }
 
