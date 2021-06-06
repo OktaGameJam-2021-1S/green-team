@@ -302,7 +302,8 @@ public class BuildingController : MonoBehaviour
         if (IsIdeal())
         {
             Score score = _configurationAsset.Scores.Find(x => (ScoreType)x.ScoreType == ScoreType.IdealBuilding);
-            _scoreCount.SetText(score.Amount.ToString());
+            _scoreCount.SetText("+" + score.Amount.ToString());
+            _scoreCount.SetColor(Color.green);
         }
         else
         {
