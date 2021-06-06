@@ -44,7 +44,6 @@ public class ToolNetwork
     
     public ToolType type;
     public int uses;
-    public bool isHold;
 }
 
 public class GameStateNetwork
