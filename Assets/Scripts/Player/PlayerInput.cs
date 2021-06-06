@@ -16,12 +16,19 @@ public class PlayerInput : MonoBehaviour
     private PlayerTool _tool;
     private PlayerNetworkSync _player;
 
+    private bool bCanYell;
+
+    private float fDeltaTime;
+    private float fYellCooldown = 2f;
+
     private void Awake()
     {
         _controller = FindObjectOfType<GameController>();
         _player = GetComponent<PlayerNetworkSync>();
         _tool = GetComponent<PlayerTool>();
         _playerMovement = GetComponent<PlayerMovement>();
+        bCanYell = true;
+        fDeltaTime = 0;
     }
 
     private void Update()
@@ -50,6 +57,18 @@ public class PlayerInput : MonoBehaviour
         }
 
         _playerMovement.Move(_horizontal, _vertical);
+
+
+        if(!bCanYell)
+        {
+            fDeltaTime += Time.deltaTime;
+            if(fDeltaTime >= fYellCooldown)
+            {
+                bCanYell = true;
+                fDeltaTime = 0f;
+            }
+        }
+
     }
 
     private void Use()
@@ -61,8 +80,9 @@ public class PlayerInput : MonoBehaviour
             {
                 _tool.Use(_playerMovement.InsideBuilding);
             }
-            else
+            else if(bCanYell)
             {
+                bCanYell = false;
                 var building = GameController.Instance.GetBuilding(_playerMovement, false);
                 building.Yell();
                 GameController.Instance.UpdateAllChallenges();

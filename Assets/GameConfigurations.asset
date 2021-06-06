@@ -45,7 +45,7 @@ MonoBehaviour:
     ScoreType: 3
     Amount: -3
   WinThreshold: 30
-  SecondsToGameEnd: 10
+  SecondsToGameEnd: 30
   BuildingData:
   - id: 1
     width: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     graffiti: 0
     maxDamage: 2
     maxPlant: 1
-    people: 1
+    people: 8
   - id: 4
     width: 0
     height: 6
