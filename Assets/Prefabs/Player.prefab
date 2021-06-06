@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50f52b90d0108c4ba66047aca5a2669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 6791313876559243539}
 --- !u!114 &116803591267303410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,5 +143,10 @@ PrefabInstance:
 --- !u!4 &2727084777064869584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6719264985631074299, guid: ccbd14351c49e3a47822ab7e39b2ccdd, type: 3}
+  m_PrefabInstance: {fileID: 8711952622381238571}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6791313876559243539 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2799133668393590840, guid: ccbd14351c49e3a47822ab7e39b2ccdd, type: 3}
   m_PrefabInstance: {fileID: 8711952622381238571}
   m_PrefabAsset: {fileID: 0}

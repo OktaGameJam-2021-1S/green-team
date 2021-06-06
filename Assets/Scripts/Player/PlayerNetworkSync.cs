@@ -44,6 +44,7 @@ public class PlayerNetworkSync : MonoBehaviour
 
         _speed = network.speed;
         _moveSpeed = network.moveSpeed;
+        _movement.SetSpeed(SpeedNormalized);
 
         if (!network.hasTool)
         {

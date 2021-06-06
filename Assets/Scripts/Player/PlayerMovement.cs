@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public LayerHeight VerticalPosition => _verticalPosition;
 
+    [SerializeField] private Animator _playerAnimator;
+
     private void Awake()
     {
         _verticalPosition = LayerHeight.Sidewalk;
@@ -34,6 +36,11 @@ public class PlayerMovement : MonoBehaviour
     {
         float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
         transform.position = new Vector3(_horizontalPosition, yPos, 0f);
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _playerAnimator.SetFloat("Speed", speed);
     }
 
 }
