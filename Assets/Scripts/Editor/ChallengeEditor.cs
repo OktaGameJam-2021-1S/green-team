@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ChallengeEditor : EditorWindow
 {
-    [SerializeField] private ChallengeConfiguration _configurationAsset;
+    [SerializeField] private GameConfiguration _configurationAsset;
 
     SerializedObject _serializedConfig;
     SerializedProperty _serializedChallenges;
     private List<bool> itemFoldoutRef;
 
-    [MenuItem("Challenges/Challenge Editor")]
+    [MenuItem("Game Editor/Challenge Editor")]
     static void Configuration()
     {
-        ChallengeEditor window = (ChallengeEditor)GetWindow(typeof(ChallengeEditor), true, "ChallengeEditor Editor");
+        ChallengeEditor window = (ChallengeEditor)GetWindow(typeof(ChallengeEditor), true, "Challenge Editor");
         window.Show();
 
     }
@@ -30,10 +30,21 @@ public class ChallengeEditor : EditorWindow
     {
         _serializedConfig.Update();
 
-        for(int i = 0; i < _serializedChallenges.arraySize; i++)
+        for (int i = 0; i < _serializedChallenges.arraySize; i++)
         {
+
             SerializedProperty itemRef = _serializedChallenges.GetArrayElementAtIndex(i);
-            DrawItem(i, itemRef);
+            SerializedProperty itemName = itemRef.FindPropertyRelative("Name");
+
+            ScoreEditor.VerifyFoldoutList(itemFoldoutRef, i);
+            itemFoldoutRef[i] = EditorGUILayout.Foldout(itemFoldoutRef[i], itemName.stringValue, true);
+
+            if (itemFoldoutRef[i])
+            {
+                DrawItem(i, itemRef);
+            }
+
+
             EditorGUILayout.Separator();
         }
 

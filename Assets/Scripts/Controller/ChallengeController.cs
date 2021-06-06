@@ -4,7 +4,7 @@ using UnityEngine;
 public class ChallengeController : MonoBehaviour
 {
 
-    public ChallengeConfiguration _configurationAsset;
+    public GameConfiguration _configurationAsset;
     public List<ChallengeView> _actualChallenges;
 
     [SerializeField]  private int _actualPoints;
@@ -19,27 +19,7 @@ public class ChallengeController : MonoBehaviour
         _actualPoints = 0;
     }
 
-    private void UpdateChallenges(GameStateNetwork state)
-    {
-        for (int i = 0; i < _actualChallenges.Count; i++)
-        {
-            _actualChallenges[i].UpdateProgress();
-        }
-    }
-
-    private void SetupChallengeViews()
-    {
-        _actualChallenges = new List<ChallengeView>();
-        for (int i = 0; i < _configurationAsset.Challenges.Count; i++)
-        {
-            var challengeView = Instantiate(_challengeViewPrefab, _ChallengelistRoot).GetComponent<ChallengeView>();
-            challengeView.SetupView(_configurationAsset.Challenges[i]);
-            challengeView.OnChallengeComplete += OnChallengeComplete;
-            _actualChallenges.Add(challengeView);
-        }
-    }
-        
-
+       
     public static bool CheckAmount(Challenge challenge)
     {
         int progression = GetChallengeProgression(challenge);
@@ -79,6 +59,8 @@ public class ChallengeController : MonoBehaviour
         }
     }
 
+    
+
     private void OnChallengeComplete(Challenge pChallenge)
     {
         switch ((RewardType)pChallenge.RewardType)
@@ -86,6 +68,26 @@ public class ChallengeController : MonoBehaviour
             case RewardType.Score:
                 _actualPoints += pChallenge.RewardAmount;
                 break;
+        }
+    }
+
+    private void UpdateChallenges(GameStateNetwork state)
+    {
+        for (int i = 0; i < _actualChallenges.Count; i++)
+        {
+            _actualChallenges[i].UpdateProgress();
+        }
+    }
+
+    private void SetupChallengeViews()
+    {
+        _actualChallenges = new List<ChallengeView>();
+        for (int i = 0; i < _configurationAsset.Challenges.Count; i++)
+        {
+            var challengeView = Instantiate(_challengeViewPrefab, _ChallengelistRoot).GetComponent<ChallengeView>();
+            challengeView.SetupView(_configurationAsset.Challenges[i]);
+            challengeView.OnChallengeComplete += OnChallengeComplete;
+            _actualChallenges.Add(challengeView);
         }
     }
 
@@ -97,7 +99,7 @@ public class ChallengeController : MonoBehaviour
         for (int i = 0; i < lBuildings.Count; i++)
         {
             pBuilding = lBuildings[i];
-            demolishedCount += (pBuilding.DamageTaken >= pBuilding.MaxDamage)? 1: 0;
+            demolishedCount += (pBuilding.DamageTaken > pBuilding.MaxDamage)? 1: 0;
         }
 
         return demolishedCount;

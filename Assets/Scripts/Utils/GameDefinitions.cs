@@ -1,6 +1,23 @@
 using System;
 
 [Serializable]
+public struct Score
+{
+    public string Name;
+    public int ScoreType;
+    public int Amount;
+}
+
+
+public enum ScoreType
+{
+    PeopleInCity = 0,
+    CityWithoutPeople = 1,
+    IdealBuilding = 2,
+    NonIdealBuilding = 3,
+}
+
+[Serializable]
 public struct Challenge
 {
     public string Name;
