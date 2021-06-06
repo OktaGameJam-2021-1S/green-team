@@ -44,7 +44,11 @@ public class ToolNetworkSync : MonoBehaviour
 
     public bool UseTool(BuildingController building)
     {
-        if (building.PeopleInBuilding > 0 && _toolSprite.Type != ToolType.AirHorn) return true;
+        if (building.PeopleInBuilding > 0 && _toolSprite.Type != ToolType.AirHorn)
+        {
+            building.AlertPersonInside();
+            return true;
+        }
         _uses -= 1;
         if (_toolSprite.Type == ToolType.Hammer)
         {

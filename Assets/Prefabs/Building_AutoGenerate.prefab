@@ -169,6 +169,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!95 &1557397652571484763
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887630755409948027}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e213226faaad6249bb83e0441354ff8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2457777284485070153
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +697,7 @@ MonoBehaviour:
   _peoplePrefab: {fileID: 2908194421170883720, guid: 5253018270adf0a4e9a9e1e8f709e961, type: 3}
   _alertPlant: {fileID: 5498004807258057386}
   _alertHammer: {fileID: 4598997447340243789}
+  _useToolEffect: {fileID: 0}
 --- !u!82 &9112479223663980662
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1066,6 +1086,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d95f230537d93a943b0f04f5c3a3bccd, type: 3}
+--- !u!1 &1887630755409948027 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 26318561263338392, guid: d95f230537d93a943b0f04f5c3a3bccd, type: 3}
+  m_PrefabInstance: {fileID: 1904942087251832547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7766797474465916311 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8189377675633560436, guid: d95f230537d93a943b0f04f5c3a3bccd, type: 3}
@@ -1076,7 +1101,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -9034568453716535285, guid: d95f230537d93a943b0f04f5c3a3bccd, type: 3}
   m_PrefabInstance: {fileID: 1904942087251832547}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1887630755409948027}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dacff6c3adb6594888b2ae9dcae14fb, type: 3}
