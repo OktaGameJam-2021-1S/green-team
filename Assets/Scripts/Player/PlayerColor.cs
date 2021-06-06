@@ -9,9 +9,16 @@ public class PlayerColor : MonoBehaviour
 
     public void SetPlayerColor()
     {
-        foreach(SpriteRenderer s in sprites)
+        SetPlayerColor(color);
+    }
+
+    public void SetPlayerColor(Color c)
+    {
+        color = c;
+
+        foreach (SpriteRenderer s in sprites)
         {
-            s.color = color;
+            s.color = c;
         }
     }
 }
