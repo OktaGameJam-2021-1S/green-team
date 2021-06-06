@@ -116,7 +116,7 @@ public class ScoreEditor : EditorWindow
             string[] sStringItem = sLinesArray[i].Split(',');
             if (sStringItem[0].Equals("Building ID")) continue;
             BuildingNetwork pNewItem = new BuildingNetwork();
-            pNewItem.id = i;
+            pNewItem.id = int.Parse(sStringItem[0].Replace("Building_", ""));
             pNewItem.color = sStringItem[1];
             pNewItem.height = int.Parse(sStringItem[2]);
             pNewItem.maxDamage = int.Parse(sStringItem[3]);

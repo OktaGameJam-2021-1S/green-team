@@ -46,3 +46,202 @@ MonoBehaviour:
     Amount: -3
   WinThreshold: 30
   SecondsToGameEnd: 360
+  BuildingData:
+  - id: 1
+    width: 0
+    height: 6
+    x: 0
+    color: '#FF5733'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 5
+    maxPlant: 1
+    people: 4
+  - id: 2
+    width: 0
+    height: 5
+    x: 0
+    color: '#FF5734'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 4
+    maxPlant: 1
+    people: 2
+  - id: 3
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5735'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 1
+    people: 1
+  - id: 4
+    width: 0
+    height: 6
+    x: 0
+    color: '#FF5736'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 4
+    people: 3
+  - id: 5
+    width: 0
+    height: 4
+    x: 0
+    color: '#FF5737'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 2
+    people: 0
+  - id: 6
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5738'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 1
+    maxPlant: 2
+    people: 3
+  - id: 7
+    width: 0
+    height: 6
+    x: 0
+    color: '#FF5739'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 5
+    maxPlant: 1
+    people: 2
+  - id: 8
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5740'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 1
+    people: 2
+  - id: 9
+    width: 0
+    height: 7
+    x: 0
+    color: '#FF5741'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 5
+    people: 0
+  - id: 10
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5742'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 1
+    maxPlant: 2
+    people: 3
+  - id: 11
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5743'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 1
+    people: 1
+  - id: 12
+    width: 0
+    height: 4
+    x: 0
+    color: '#FF5744'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 2
+    people: 2
+  - id: 13
+    width: 0
+    height: 7
+    x: 0
+    color: '#FF5745'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 6
+    maxPlant: 1
+    people: 0
+  - id: 14
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5746'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 1
+    maxPlant: 2
+    people: 3
+  - id: 15
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5747'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 1
+    maxPlant: 2
+    people: 2
+  - id: 16
+    width: 0
+    height: 4
+    x: 0
+    color: '#FF5748'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 2
+    maxPlant: 2
+    people: 4
+  - id: 17
+    width: 0
+    height: 7
+    x: 0
+    color: '#FF5749'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 1
+    maxPlant: 6
+    people: 4
+  - id: 18
+    width: 0
+    height: 3
+    x: 0
+    color: '#FF5750'
+    damage: 0
+    plant: 0
+    graffiti: 0
+    maxDamage: 1
+    maxPlant: 2
+    people: 2
