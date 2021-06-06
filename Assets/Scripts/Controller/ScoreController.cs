@@ -19,6 +19,35 @@ public class ScoreController : MonoBehaviour
         _actualPoints = 0;
     }
 
+    public int CalculateFinalScore()
+    {
+        int score = _actualPoints;
+
+        for(int i = 0; i < _configurationAsset.Scores.Count; i++)
+        {
+            Score pScore = _configurationAsset.Scores[i];
+            int iValue = 0;
+            switch ((ScoreType)pScore.ScoreType)
+            {
+                case ScoreType.PeopleInCity:
+                    iValue = GetPeopleInCity();
+                    break;
+                case ScoreType.CityWithoutPeople:
+                    iValue = (GetPeopleInCity() > 0) ? 0 : 1;
+                    break;
+                case ScoreType.IdealBuilding:
+                    iValue = GetIdealBuildings();
+                    break;
+                case ScoreType.NonIdealBuilding:
+                    iValue = GetNonIdealBuildings();
+                    break;
+            }
+
+            iValue *= pScore.Amount;
+            score += iValue;
+        }
+        return score;
+    }
        
     public static bool CheckAmount(Challenge challenge)
     {
@@ -157,5 +186,36 @@ public class ScoreController : MonoBehaviour
         }
 
         return graffitiCount;
+    }
+
+    private static int GetPeopleInCity()
+    {
+        int peopleCount = 0;
+        BuildingNetworkSync pBuilding;
+        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        for (int i = 0; i < lBuildings.Count; i++)
+        {
+            pBuilding = lBuildings[i];
+            peopleCount += pBuilding.Peoples;
+        }
+        return peopleCount;
+    }
+
+    private static int GetIdealBuildings()
+    {
+        int idealBuildings = 0;
+        BuildingNetworkSync pBuilding;
+        List<BuildingNetworkSync> lBuildings = GameController.Instance.Buildings;
+        for (int i = 0; i < lBuildings.Count; i++)
+        {
+            pBuilding = lBuildings[i];
+            // TODO: Check if all floor has something
+        }
+        return idealBuildings;
+    }
+
+    private static int GetNonIdealBuildings()
+    {
+        return GetIdealBuildings() - GameController.Instance.Buildings.Count;
     }
 }
