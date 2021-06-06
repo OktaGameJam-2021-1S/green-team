@@ -9,6 +9,7 @@ public class BuildingController : MonoBehaviour
     [SerializeField] List<GameObject> _variableFloors;
 
     [SerializeField] Transform _spawnRoot;
+    [SerializeField] Transform _demolishedRoot;
 
     private BuildingFloor _lastFloorCreated;
 
@@ -20,6 +21,8 @@ public class BuildingController : MonoBehaviour
 
     public void Setup(BuildingNetwork pBuildingData)
     {
+        _spawnRoot.gameObject.SetActive(true);
+        _demolishedRoot.gameObject.SetActive(false);
         _floors = new List<BuildingFloor>();
         _buildingNetworkReference = pBuildingData;
         _numInterationsDone = 0;
@@ -75,6 +78,8 @@ public class BuildingController : MonoBehaviour
     public void DemolishBuilding()
     {
         Debug.Log("Puft");
+        _spawnRoot.gameObject.SetActive(false);
+        _demolishedRoot.gameObject.SetActive(true);
     }
 
     private BuildingFloor GetRandomAvaibleFloor()
