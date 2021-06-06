@@ -3,8 +3,6 @@ public enum LayerHeight
     Street = 0,
     Sidewalk = 1,
     Building = 2,
-    TopBuilding1 = 3,
-    TopBuilding2 = 4,
 }
 
 public static class LayerHeightHelper
@@ -19,17 +17,12 @@ public static class LayerHeightHelper
     {
         switch (layer)
         {
-            // The building height is different per building
-            case LayerHeight.TopBuilding2:
-                return 2f;
-            case LayerHeight.TopBuilding1:
-                return 1f;
             case LayerHeight.Building:
-                return 0f;
+                return 99f;
             case LayerHeight.Sidewalk:
-                return -1.20f;
+                return 0f;
             case LayerHeight.Street:
-                return -2.30f;
+                return -1.5f;
         }
         return 0f;
     }

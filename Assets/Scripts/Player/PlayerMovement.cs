@@ -23,16 +23,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float x, int y)
     {
+        _verticalPosition = _verticalPosition + y;
+        if ((int)_verticalPosition > (int)LayerHeight.Building) _verticalPosition = LayerHeight.Building;
+        if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
+
+        float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
+
         _speed = x * _moveSpeed;
+        _speed = (_verticalPosition == LayerHeight.Building) ? 0 : _speed;
         if(_playerAnimator) _playerAnimator.SetFloat("Speed", _speed);
 
         float xPos = transform.position.x + (_speed * Time.deltaTime);
 
-        _verticalPosition = _verticalPosition + y;
-        if ((int)_verticalPosition > (int)LayerHeight.TopBuilding2) _verticalPosition = LayerHeight.TopBuilding2;
-        if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
-
-        float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
+        
         transform.position = new Vector3(xPos, yPos);
     }
 
