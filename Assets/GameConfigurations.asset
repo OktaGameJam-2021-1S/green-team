@@ -45,7 +45,7 @@ MonoBehaviour:
     ScoreType: 3
     Amount: -3
   WinThreshold: 30
-  SecondsToGameEnd: 30
+  SecondsToGameEnd: 180
   BuildingData:
   - id: 1
     width: 0
