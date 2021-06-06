@@ -150,14 +150,14 @@ public class BuildingController : MonoBehaviour
             _playerCount.gameObject.SetActive(false);
         }
 
-        _alertPlant.SetActive((Naturalized + 1 >= _maxPlant));
-        _alertHammer.SetActive((DamageTaken + 1 >= _maxDamage));
+        _alertPlant.SetActive((Naturalized >= _maxPlant));
+        _alertHammer.SetActive((DamageTaken >= _maxDamage));
 
     }
 
     public void DealDamageFloor()
     {
-        if (_maxPlant <= DamageTaken)
+        if (_maxDamage <= DamageTaken)
         {
             DemolishBuilding();
         }
