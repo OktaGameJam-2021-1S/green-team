@@ -150,8 +150,8 @@ public class BuildingController : MonoBehaviour
             _playerCount.gameObject.SetActive(false);
         }
 
-        _alertPlant.SetActive((Naturalized >= _maxPlant));
-        _alertHammer.SetActive((DamageTaken >= _maxDamage));
+        _alertPlant.SetActive((Naturalized >= _maxPlant && !Demolished));
+        _alertHammer.SetActive((DamageTaken >= _maxDamage && !Demolished));
 
     }
 
@@ -212,6 +212,10 @@ public class BuildingController : MonoBehaviour
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
+        _alertHammer.SetActive(false);
+        _alertPlant.SetActive(false);
+        _playerCount.gameObject.SetActive(false);
+        _personCount.gameObject.SetActive(false);
         UpdateMarkers();
         OnDemolish?.Invoke();
     }
