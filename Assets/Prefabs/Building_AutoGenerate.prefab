@@ -697,7 +697,7 @@ MonoBehaviour:
   _peoplePrefab: {fileID: 2908194421170883720, guid: 5253018270adf0a4e9a9e1e8f709e961, type: 3}
   _alertPlant: {fileID: 5498004807258057386}
   _alertHammer: {fileID: 4598997447340243789}
-  _useToolEffect: {fileID: 0}
+  _useToolEffect: {fileID: 6003547805333923189, guid: 22c1dc51032bced47a750775c639be02, type: 3}
 --- !u!82 &9112479223663980662
 AudioSource:
   m_ObjectHideFlags: 0
