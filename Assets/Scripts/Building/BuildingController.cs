@@ -24,6 +24,8 @@ public class BuildingController : MonoBehaviour
 
     [SerializeField] GameObject _alertPlant;
     [SerializeField] GameObject _alertHammer;
+    [Header("VFX")]
+    [SerializeField] GameObject _useToolEffect;
 
     private BuildingFloor _lastFloorCreated;
 
@@ -168,6 +170,7 @@ public class BuildingController : MonoBehaviour
         else
         {
             BuildingFloor floor = GetRandomAvaibleFloor();
+            if (_useToolEffect) Instantiate(_useToolEffect, floor.transform.position, Quaternion.identity);
             floor.DamageFloor();
             UpdateMarkers();
         }
@@ -182,6 +185,7 @@ public class BuildingController : MonoBehaviour
         else
         {
             BuildingFloor floor = GetRandomAvaibleFloor();
+            if (_useToolEffect) Instantiate(_useToolEffect, floor.transform.position, Quaternion.identity);
             floor.Naturalize();
             UpdateMarkers();
         }
@@ -196,6 +200,7 @@ public class BuildingController : MonoBehaviour
     {
         if (PeopleInBuilding > 0)
         {
+            if (_useToolEffect) Instantiate(_useToolEffect, transform.position, Quaternion.identity);
             StartCoroutine(AirHornAction());
         }
     }
@@ -313,6 +318,11 @@ public class BuildingController : MonoBehaviour
             _scoreCount.SetText(score.Amount.ToString());
             _scoreCount.SetColor(Color.red);
         }
+    }
+
+    public void AlertPersonInside()
+    {
+        _personCount.GetComponent<Animator>().SetTrigger("Shake");
     }
 
 }
