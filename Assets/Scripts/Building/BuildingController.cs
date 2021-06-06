@@ -7,6 +7,8 @@ public class BuildingController : MonoBehaviour
     [SerializeField] GameObject _baseFloor;
     [SerializeField] GameObject _topFloor;
     [SerializeField] List<GameObject> _variableFloors;
+    [SerializeField] private BuildCount _playerCount;
+    [SerializeField] private BuildCount _personCount;
 
     [SerializeField] Transform _spawnRoot;
     [SerializeField] Transform _demolishedRoot;
@@ -18,6 +20,7 @@ public class BuildingController : MonoBehaviour
     private List<BuildingFloor> _floors;
 
     private BuildingNetwork _buildingNetworkReference;
+
 
     public int PeopleInBuilding { get; set; }
 
@@ -109,6 +112,35 @@ public class BuildingController : MonoBehaviour
         var topFloor = Instantiate(_topFloor, _spawnRoot);
         topFloor.transform.position = new Vector3(topFloor.transform.position.x, _lastFloorCreated.transform.position.y + (_lastFloorCreated.Collider.size.y * _lastFloorCreated.transform.localScale.y * transform.localScale.y), topFloor.transform.position.z);
 
+        _playerCount.gameObject.transform.position = new Vector3(_playerCount.transform.position.x, topFloor.transform.position.y + 0.3f, _playerCount.transform.position.z);
+        _personCount.gameObject.transform.position = new Vector3(_personCount.transform.position.x, topFloor.transform.position.y + 0.3f, _personCount.transform.position.z);
+
+        UpdateMarkers();
+
+    }
+
+    public void UpdateMarkers()
+    {
+        if(PeopleInBuilding > 0)
+        {
+            _personCount.gameObject.SetActive(true);
+            _personCount.SetText(PeopleInBuilding.ToString());
+        }
+        else
+        {
+            _personCount.gameObject.SetActive(false);
+        }
+
+
+        if (PlayersInside.Count > 0)
+        {
+            _playerCount.gameObject.SetActive(true);
+            _playerCount.SetText(PlayersInside.Count.ToString());
+        }
+        else
+        {
+            _playerCount.gameObject.SetActive(false);
+        }
     }
 
     public void DealDamageFloor()
@@ -167,6 +199,7 @@ public class BuildingController : MonoBehaviour
         {
             SpawnCitizen();
             PeopleInBuilding--;
+            UpdateMarkers();
         }
     }
 
@@ -215,6 +248,7 @@ public class BuildingController : MonoBehaviour
                 PeopleInBuilding--;
             }
             fTime += Time.deltaTime;
+            UpdateMarkers();
             yield return null;
         }
 

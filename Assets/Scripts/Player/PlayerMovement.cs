@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         {
             building.PlayersInside.Add(this);
             _insideBuilding = building;
+            building.UpdateMarkers();
         }
     }
 
@@ -67,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         if (_insideBuilding)
         {
             _insideBuilding.PlayersInside.Remove(this);
+            _insideBuilding.UpdateMarkers();
         }
     }
 
