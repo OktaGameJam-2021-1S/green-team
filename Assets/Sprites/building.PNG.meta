@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: 073e712857cf2504996d213c208edbe6
+guid: 58695ba6384b769468ce61f8f1e72051
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2569119218762868166
+    second: building_roof
+  - first:
+      213: 1493945604572549994
+    second: building_floor2
+  - first:
+      213: -6233456244046297617
+    second: building_floor1
+  - first:
+      213: 7401945791725032824
+    second: building_base
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -32,21 +44,21 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 2
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
-  alignment: 6
+  spriteMeshType: 1
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 250
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -137,11 +149,95 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: building_roof
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3595
+        width: 3000
+        height: 705
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3a920caea7a85cd0800000000000000
+      internalID: -2569119218762868166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: building_floor2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2498
+        width: 3000
+        height: 773
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a639d42bc9f8bb410800000000000000
+      internalID: 1493945604572549994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: building_floor1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1386
+        width: 3000
+        height: 773
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe50ea282905e79a0800000000000000
+      internalID: -6233456244046297617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: building_base
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 291
+        width: 3000
+        height: 773
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 875d77afa7ef8b660800000000000000
+      internalID: 7401945791725032824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: b0f98cfd81aecc64992f5a757ee88a0d
     internalID: 0
     vertices: []
     indices: 
