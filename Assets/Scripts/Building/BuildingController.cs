@@ -214,12 +214,18 @@ public class BuildingController : MonoBehaviour
     {
         Demolished = true;
         Debug.Log("Puft");
-        _spawnRoot.gameObject.SetActive(false);
-        _demolishedRoot.gameObject.SetActive(true);
+        /*_spawnRoot.gameObject.SetActive(false);
+        _demolishedRoot.gameObject.SetActive(true);*/
         _alertHammer.SetActive(false);
         _alertPlant.SetActive(false);
         _playerCount.gameObject.SetActive(false);
         _personCount.gameObject.SetActive(false);
+
+        for(int i = 0; i < _floors.Count; i++)
+        {
+            _floors[i].DemolishFloor();
+        }
+        _topFloor.GetComponent<SpriteRenderer>().color = Color.gray;
         UpdateMarkers();
         OnDemolish?.Invoke();
     }
@@ -230,6 +236,7 @@ public class BuildingController : MonoBehaviour
         {
             _floors[i].Reset();
         }
+        _topFloor.GetComponent<SpriteRenderer>().color = Color.white;
         _spawnRoot.gameObject.SetActive(true);
         _demolishedRoot.gameObject.SetActive(false);
         Demolished = false;

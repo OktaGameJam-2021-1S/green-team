@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 662405805}
+  - component: {fileID: 4130656459901234172}
   m_Layer: 0
   m_Name: Demolished
   m_TagString: Untagged
@@ -16,8 +16,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &662405805
-Transform:
+--- !u!224 &4130656459901234172
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -30,6 +30,11 @@ Transform:
   m_Father: {fileID: 8687467944770679115}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &178992774313091035
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +642,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 8687467944880389309}
-  - {fileID: 662405805}
+  - {fileID: 4130656459901234172}
   - {fileID: 7552357349936882968}
   - {fileID: 6278894131066172924}
   - {fileID: 7766797474465916311}
@@ -668,7 +673,7 @@ MonoBehaviour:
   _personCount: {fileID: 1797346813772084968}
   _scoreCount: {fileID: 3762310158535873341}
   _spawnRoot: {fileID: 8687467944880389309}
-  _demolishedRoot: {fileID: 662405805}
+  _demolishedRoot: {fileID: 4130656459901234172}
   _peoplePrefab: {fileID: 2908194421170883720, guid: 5253018270adf0a4e9a9e1e8f709e961, type: 3}
   _alertPlant: {fileID: 5498004807258057386}
   _alertHammer: {fileID: 4598997447340243789}

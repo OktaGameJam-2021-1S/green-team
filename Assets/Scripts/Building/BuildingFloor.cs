@@ -9,6 +9,9 @@ public class BuildingFloor : MonoBehaviour
     [SerializeField] private Renderer _renderer;
     [SerializeField] private BoxCollider2D _collider;
 
+
+    private SpriteRenderer _spriteRenderer;
+
     public BoxCollider2D Collider => _collider;
 
     public bool Interactable { get; private set; }
@@ -23,6 +26,7 @@ public class BuildingFloor : MonoBehaviour
 
     private void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         Reset();
     }
 
@@ -35,6 +39,7 @@ public class BuildingFloor : MonoBehaviour
         Naturalized = false;
         Destroyed = false;
         Graffiti = false;
+        _spriteRenderer.color = Color.white;
     }
 
     public void Naturalize()
@@ -88,5 +93,11 @@ public class BuildingFloor : MonoBehaviour
         baseColor.a = 1f;
         _naturalized.color = baseColor;
     }
+
+    public void DemolishFloor()
+    {
+        _spriteRenderer.color = Color.gray;
+    }
+
 
 }
