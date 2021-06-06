@@ -36,7 +36,7 @@ public class LocalNetworkController : NetworkController
                 color = "#ffcc00",
                 damage = 0,
                 plant = 0,
-                graffiti = false
+                graffiti = 0
             });
             x += width;
         }
