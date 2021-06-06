@@ -31,7 +31,7 @@ public class NetworkController : MonoBehaviour
     private bool _connected;
     private string _deviceId;
 
-    private bool _loadGameScene;
+    private string _loadScene;
 
     protected virtual void Awake()
     {
@@ -75,19 +75,20 @@ public class NetworkController : MonoBehaviour
             _connected = true;
             // _socket.Emit("create_user", "{\"device_id\": \"" + _deviceId + "\"}");
             
-            _socket.On("game_pre_start", () => {
-                Debug.Log("game_pre_start");
-                _loadGameScene = true;
-                CurrentGameStatus = GameStatus.PreStart;
-            });
-            _socket.On("game_start", () => {
-                Debug.Log("game_start");
-                CurrentGameStatus = GameStatus.Game;
-            });
-
-            _socket.On("player_connect", HandlePlayerConnect);
-            _socket.On("game_state", HandleGameState);
         });
+
+        _socket.On("game_pre_start", () => {
+            Debug.Log("game_pre_start");
+            _loadScene = "GamePrototype";
+            CurrentGameStatus = GameStatus.PreStart;
+        });
+        _socket.On("game_start", () => {
+            Debug.Log("game_start");
+            CurrentGameStatus = GameStatus.Game;
+        });
+
+        _socket.On("player_connect", HandlePlayerConnect);
+        _socket.On("game_state", HandleGameState);
 
         _socket.On (QSocket.EVENT_CONNECT_ERROR, () => {
             Debug.Log ("EVENT_CONNECT_ERROR");
@@ -103,6 +104,7 @@ public class NetworkController : MonoBehaviour
 
         _socket.On (QSocket.EVENT_DISCONNECT, () => {
             Debug.Log ("EVENT_DISCONNECT");
+            _loadScene = "NetworkScene";
         });
 
         _socket.On (QSocket.EVENT_MESSAGE, () => {
@@ -112,10 +114,10 @@ public class NetworkController : MonoBehaviour
 
     private void Update()
     {
-        if (_loadGameScene)
+        if (!string.IsNullOrEmpty(_loadScene))
         {
-            _loadGameScene = false;
-            UnityEngine.SceneManagement.SceneManager.LoadScene("GamePrototype");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(_loadScene);
+            _loadScene = null;
         }
     }
 
@@ -144,6 +146,7 @@ public class NetworkController : MonoBehaviour
         }
         catch (System.Exception err)
         {
+            Debug.LogError(data.ToString());
             Debug.LogError(err.Message);
             throw;
         }
