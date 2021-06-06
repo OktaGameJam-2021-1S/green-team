@@ -13,10 +13,15 @@ public class UITimer : MonoBehaviour
     public float MaxTime => _fMaxTime;
     public float DeltaTime => _fDeltaTime;
 
+    private bool _audioIsFast;
+    private AudioSource _musicSource;
+
     private void Start()
     {
         _fDeltaTime = _fMaxTime = _configurationAsset.SecondsToGameEnd;
         _textField = GetComponent<TextMeshProUGUI>();
+
+        _musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -24,6 +29,11 @@ public class UITimer : MonoBehaviour
         _fDeltaTime -= Time.deltaTime;
         if (_fDeltaTime >= 0)
         {
+            if (!_audioIsFast && _fDeltaTime < _fMaxTime * .3f)
+            {
+                _audioIsFast = true;
+                _musicSource.pitch = 1.2f;
+            }
             _textField.text = ConvertSecondsToMinutes(_fDeltaTime);
         }
         else

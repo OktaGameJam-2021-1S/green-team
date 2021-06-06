@@ -21,6 +21,7 @@ public class PlayerTool : MonoBehaviour
         _currentTool.transform.parent = _hand;
         _currentTool.transform.localPosition = Vector3.zero;
         _currentTool.transform.localRotation = Quaternion.identity;
+        _currentTool.transform.localScale = Vector3.one;
         HasTool = true;
     }
 
