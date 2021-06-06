@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
@@ -8,6 +9,9 @@ public class UITimer : MonoBehaviour
     private float _fMaxTime;
     private float _fDeltaTime;
     private TextMeshProUGUI _textField;
+    
+    public float MaxTime => _fMaxTime;
+    public float DeltaTime => _fDeltaTime;
 
     private void Start()
     {

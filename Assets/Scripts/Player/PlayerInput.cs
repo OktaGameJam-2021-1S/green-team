@@ -54,9 +54,9 @@ public class PlayerInput : MonoBehaviour
 
     private void Use()
     {
-        if (_tool.HasTool)
+        if (_tool.HasTool && _playerMovement.InsideBuilding)
         {
-            _tool.Use(_playerMovement);
+            _tool.Use(_playerMovement.InsideBuilding);
         }
     }
 
@@ -68,10 +68,10 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        foreach (var toolKeyPair in _controller.Tools)
+        foreach (var toolSync in _controller.Tools)
         {
-            var toolSync = toolKeyPair.Value;
-            if (toolSync.Movement.VerticalPosition != _playerMovement.VerticalPosition) continue;
+            if (!toolSync.IsUsable) continue;
+            if (toolSync.Position.VerticalPosition != _playerMovement.VerticalPosition) continue;
             if (Vector3.Distance(toolSync.transform.position, transform.position) < .5f)
             {
                 _tool.HoldTool(toolSync);

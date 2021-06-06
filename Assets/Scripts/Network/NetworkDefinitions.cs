@@ -39,11 +39,10 @@ public class BuildingNetwork
 
 public class ToolNetwork
 {
-    public int id;
-    public float x;
-    public int y;
+    public float horizontalPosition;
+    public LayerHeight verticalPosition;
     
-    public int type;
+    public ToolType type;
     public int uses;
     public bool isHold;
 }

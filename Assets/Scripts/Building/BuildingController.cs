@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
+
+    public delegate void DemolishHandler();
+    public event DemolishHandler OnDemolish;
+
     [SerializeField] GameObject _baseFloor;
     [SerializeField] GameObject _topFloor;
     [SerializeField] List<GameObject> _variableFloors;
@@ -27,7 +31,7 @@ public class BuildingController : MonoBehaviour
     {
         get
         {
-            return _numInterationsDone > _floors.Count;
+            return _numInterationsDone >= _floors.Count;
         }
     }
 
@@ -167,6 +171,8 @@ public class BuildingController : MonoBehaviour
         Debug.Log("Puft");
         _spawnRoot.gameObject.SetActive(false);
         _demolishedRoot.gameObject.SetActive(true);
+
+        OnDemolish?.Invoke();
     }
 
     public void ReconstructBuilding()

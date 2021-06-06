@@ -5,27 +5,19 @@ using UnityEngine;
 public class ToolSprite : MonoBehaviour
 {
 
-    public enum Tool
-    {
-        Hammer = 0,
-        Paint = 1,
-        Seed = 2,
-        AirHorn = 3,
-    }
-
-    [SerializeField] private GenericDictionary<Tool, Sprite> _toolSprites = default;
+    [SerializeField] private GenericDictionary<ToolType, Sprite> _toolSprites = default;
 
     private SpriteRenderer _spriteRenderer = default;
 
-    private Tool _type;
-    public Tool Type => _type;
+    private ToolType _type;
+    public ToolType Type => _type;
 
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     
-    public void Construct(Tool tool)
+    public void Construct(ToolType tool)
     {
         _type = tool;
         UpdateSprite();

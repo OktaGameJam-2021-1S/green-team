@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ToolType
+{
+    Hammer = 0,
+    Paint = 1,
+    Seed = 2,
+    AirHorn = 3,
+}
+
 public class ToolNetworkSync : MonoBehaviour
 {
 
-    private int _id;
-    public int ID => _id;
-    
-    private PlayerMovement _movement;
-    public PlayerMovement Movement => _movement;
+    private ToolPosition _position;
+    public ToolPosition Position => _position;
 
     private ToolSprite _toolSprite;
     private ToolSprite ToolSprite => _toolSprite;
@@ -17,53 +22,45 @@ public class ToolNetworkSync : MonoBehaviour
     private int _uses;
     public int Uses => _uses;
 
+    public bool IsUsable => _uses > 0;
+
     private void Awake()
     {
-        _movement = GetComponent<PlayerMovement>();
+        _position = GetComponent<ToolPosition>();
         _toolSprite = GetComponent<ToolSprite>();
     }
     
-    public void Sync(ToolNetwork network)
+    public void Setup(ToolNetwork network)
     {
-        _id = network.id;
-        _toolSprite.Construct((ToolSprite.Tool)network.type);
+        _toolSprite.Construct(network.type);
         _uses = network.uses;
-        if (!network.isHold)
-        {
-            _movement.MoveHorizontal(network.x);
-            _movement.MoveVertical(network.y);
-        }
+        _position.Setup(network.horizontalPosition, network.verticalPosition);
     }
 
-    public bool UseTool(PlayerMovement movement)
+    public bool UseTool(BuildingController building)
     {
-        var building = GameController.Instance.GetBuilding(movement);
-        if (building)
+        _uses -= 1;
+        if (_toolSprite.Type == ToolType.Hammer)
         {
-            _uses -= 1;
-            if (_toolSprite.Type == ToolSprite.Tool.Hammer)
-            {
-                building.DealDamageFloor();
-            }
-            else if (_toolSprite.Type == ToolSprite.Tool.Seed)
-            {
-                building.NaturalizeFloor();
-            }
-            else if (_toolSprite.Type == ToolSprite.Tool.Paint)
-            {
-                building.GraffitiFloor();
-            }
-            else if (_toolSprite.Type == ToolSprite.Tool.AirHorn)
-            {
-                building.AirHorn();
-            }
+            building.DealDamageFloor();
+        }
+        else if (_toolSprite.Type == ToolType.Seed)
+        {
+            building.NaturalizeFloor();
+        }
+        else if (_toolSprite.Type == ToolType.Paint)
+        {
+            building.GraffitiFloor();
+        }
+        else if (_toolSprite.Type == ToolType.AirHorn)
+        {
+            building.AirHorn();
+        }
 
-            if (_uses <= 0)
-            {
-                gameObject.SetActive(false);
-                return false;
-            }
-            
+        if (_uses <= 0)
+        {
+            gameObject.SetActive(false);
+            return false;
         }
         return true;
     }

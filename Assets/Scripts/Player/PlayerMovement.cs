@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator _playerAnimator;
 
     private BuildingController _insideBuilding;
+    public BuildingController InsideBuilding => _insideBuilding;
 
     private void Awake()
     {
@@ -54,11 +55,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void EnterBuilding()
     {
-        var building = GameController.Instance.GetBuilding(this);
+        var building = GameController.Instance.GetBuilding(this, false);
         if (building)
         {
             building.PlayersInside.Add(this);
             _insideBuilding = building;
+            _insideBuilding.OnDemolish += HandleBuildingDemolish;
+        }
+        else
+        {
+            _verticalPosition = LayerHeight.Sidewalk;
         }
     }
 
@@ -67,19 +73,18 @@ public class PlayerMovement : MonoBehaviour
         if (_insideBuilding)
         {
             _insideBuilding.PlayersInside.Remove(this);
+            _insideBuilding.OnDemolish -= HandleBuildingDemolish;
+            _insideBuilding = null;
+            _verticalPosition = LayerHeight.Sidewalk;
         }
     }
 
-    public void MoveHorizontal(float x)
+    private void HandleBuildingDemolish()
     {
-        _horizontalPosition = x;
-        UpdatePosition();
+        Debug.Log("DEMOLISH");
+        LeaveBuilding();
     }
-
-    public void MoveVertical(int y)
-    {
-    }
-
+    
     public void UpdatePosition()
     {
         float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);

@@ -18,12 +18,12 @@ public class GameController : MonoBehaviour
     private bool _isFirstGameState;
     private Dictionary<int, PlayerNetworkSync> _players;
     private Dictionary<int, BuildingController> _buildings;
-    private Dictionary<int, ToolNetworkSync> _tools;
+    private List<ToolNetworkSync> _tools;
 
     public static GameController Instance { get; private set; }
 
     public Dictionary<int, PlayerNetworkSync> Players => _players;
-    public Dictionary<int, ToolNetworkSync> Tools => _tools;
+    public List<ToolNetworkSync> Tools => _tools;
     public List<BuildingController> Buildings
     {
         get
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
         _isFirstGameState = true;
         _players = new Dictionary<int, PlayerNetworkSync>();
         _buildings = new Dictionary<int, BuildingController>();
-        _tools = new Dictionary<int, ToolNetworkSync>();
+        _tools = new List<ToolNetworkSync>();
     }
 
     private void Start()
@@ -62,58 +62,55 @@ public class GameController : MonoBehaviour
         }
 
         var toolData = Instantiate(_toolPrefab);
-        toolData.Sync(new ToolNetwork()
+        toolData.Setup(new ToolNetwork()
         {
-            id = 0,
-            x = 5,
-            y = 1,
-            type = (int)ToolSprite.Tool.Hammer,
+            horizontalPosition = 5,
+            verticalPosition = LayerHeight.Street,
+            type = ToolType.Hammer,
             uses = 5,
             isHold = false
         });
-        _tools.Add(toolData.ID, toolData);
+        _tools.Add(toolData);
 
         toolData = Instantiate(_toolPrefab);
-        toolData.Sync(new ToolNetwork()
+        toolData.Setup(new ToolNetwork()
         {
-            id = 1,
-            x = 7,
-            y = 1,
-            type = (int)ToolSprite.Tool.Seed,
+            horizontalPosition = 7,
+            verticalPosition = LayerHeight.Street,
+            type = ToolType.Seed,
             uses = 5,
             isHold = false
         });
-        _tools.Add(toolData.ID, toolData);
+        _tools.Add(toolData);
 
         toolData = Instantiate(_toolPrefab);
-        toolData.Sync(new ToolNetwork()
+        toolData.Setup(new ToolNetwork()
         {
-            id = 2,
-            x = 8,
-            y = 1,
-            type = (int)ToolSprite.Tool.Paint,
+            horizontalPosition = 8,
+            verticalPosition = LayerHeight.Street,
+            type = ToolType.Paint,
             uses = 5,
             isHold = false
         });
-        _tools.Add(toolData.ID, toolData);
+        _tools.Add(toolData);
 
         toolData = Instantiate(_toolPrefab);
-        toolData.Sync(new ToolNetwork()
+        toolData.Setup(new ToolNetwork()
         {
-            id = 3,
-            x = 2,
-            y = 0,
-            type = (int)ToolSprite.Tool.AirHorn,
+            horizontalPosition = 2,
+            verticalPosition = LayerHeight.Sidewalk,
+            type = ToolType.AirHorn,
             uses = 5,
             isHold = false
         });
-        _tools.Add(toolData.ID, toolData);
+        _tools.Add(toolData);
     }
 
-    public BuildingController GetBuilding(PlayerMovement movement)
+    public BuildingController GetBuilding(PlayerMovement movement, bool getDemolished)
     {
         if (movement.VerticalPosition == LayerHeight.Street) return null;
         var building = Buildings.Find(building => {
+            if (!getDemolished && building.Demolished) return false;
             if ((building.transform.position.x - BuildingDistance/2) < movement.transform.position.x)
             {
                 if (building.transform.position.x + BuildingDistance/2 > movement.transform.position.x)
