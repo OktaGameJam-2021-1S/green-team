@@ -12,13 +12,14 @@ public class NetworkPlayerInput : MonoBehaviour
 
     private int _lastVertical;
 
+    private NetworkController _networkController;
     private GameController _controller;
     private PlayerNetworkSync _player;
 
     private void Awake()
     {
         _playerId = 0;
-        _controller = GameController.FindObjectOfType<GameController>();
+        _networkController = GetComponent<NetworkController>();
     }
 
     public void Construct(PlayerNetwork playerNetwork)
@@ -28,7 +29,13 @@ public class NetworkPlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (_player == null && _controller.Players.ContainsKey(_playerId))
+        if (_networkController.CurrentGameStatus != NetworkController.GameStatus.Game) return;
+
+        if (_controller == null)
+        {
+            _controller = GameController.FindObjectOfType<GameController>();
+        }
+        else if (_player == null && _controller.Players.ContainsKey(_playerId))
         {
             _player = _controller.Players[_playerId];
         }

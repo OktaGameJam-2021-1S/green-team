@@ -20,6 +20,10 @@ public class PlayerNetworkSync : MonoBehaviour
     private int _toolId;
     public int ToolId => _toolId;
 
+    private float _moveSpeed;
+    private float _speed;
+    public float SpeedNormalized => _speed / _moveSpeed;
+
     private GameController _controller;
 
     private void Awake()
@@ -37,6 +41,9 @@ public class PlayerNetworkSync : MonoBehaviour
         
         _toolId = network.toolId;
         _hasTool = network.hasTool;
+
+        _speed = network.speed;
+        _moveSpeed = network.moveSpeed;
 
         if (!network.hasTool)
         {
