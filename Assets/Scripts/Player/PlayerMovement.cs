@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [SerializeField] private float _moveSpeed = 5f;
+    private float _speed = 5f;
     
     private float _horizontalPosition;
     private LayerHeight _verticalPosition;
@@ -18,6 +21,21 @@ public class PlayerMovement : MonoBehaviour
         _verticalPosition = LayerHeight.Sidewalk;
     }
 
+    public void Move(float x, int y)
+    {
+        _speed = x * _moveSpeed;
+        if(_playerAnimator) _playerAnimator.SetFloat("Speed", _speed);
+
+        float xPos = transform.position.x + (_speed * Time.deltaTime);
+
+        _verticalPosition = _verticalPosition + y;
+        if ((int)_verticalPosition > (int)LayerHeight.TopBuilding2) _verticalPosition = LayerHeight.TopBuilding2;
+        if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
+
+        float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
+        transform.position = new Vector3(xPos, yPos);
+    }
+
     public void MoveHorizontal(float x)
     {
         _horizontalPosition = x;
@@ -26,21 +44,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveVertical(int y)
     {
-        _verticalPosition = (LayerHeight) y;
-        if ((int)_verticalPosition > (int)LayerHeight.TopBuilding2) _verticalPosition = LayerHeight.TopBuilding2;
-        if ((int)_verticalPosition < (int)LayerHeight.Street) _verticalPosition = LayerHeight.Street;
-        UpdatePosition();
     }
 
     public void UpdatePosition()
     {
         float yPos = LayerHeightHelper.GetVerticalPosition(_verticalPosition);
         transform.position = new Vector3(_horizontalPosition, yPos, 0f);
-    }
-
-    public void SetSpeed(float speed)
-    {
-        if(_playerAnimator) _playerAnimator.SetFloat("Speed", speed);
     }
 
 }

@@ -15,12 +15,12 @@ public class BuildingNetworkSync : MonoBehaviour
 
     public int Peoples => _peopleNumber;
 
+    private int _damage;
     private int _maxDamage;
-
     public int MaxDamage => _maxDamage;
 
+    private int _plant;
     private int _maxPlant;
-
     public int MaxPlant => _maxPlant;
 
 
@@ -110,18 +110,14 @@ public class BuildingNetworkSync : MonoBehaviour
 
     public void DealDamage()
     {
-        NetworkController.Instance.SendDamageBuilding(new DamageBuildingNetwork()
-        {
-            id = _id
-        });
+        _damage += 1;
+        TakeDamage();
     }
     
     public void Seed()
     {
-        NetworkController.Instance.SendSeedBuilding(new SeedBuildingNetwork()
-        {
-            id = _id
-        });
+        _plant += 1;
+        PlantSeed();
     }
 
 }

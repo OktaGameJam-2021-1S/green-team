@@ -33,10 +33,7 @@ public class ToolNetworkSync : MonoBehaviour
 
     public void PickUpTool()
     {
-        NetworkController.Instance.SendPickUpTool(new PickUpToolNetwork()
-        {
-            id = _id
-        });
+        
     }
 
     public void UseTool(PlayerMovement movement)

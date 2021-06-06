@@ -16,8 +16,6 @@ public class GameController : MonoBehaviour
 
     public static GameController Instance { get; private set; }
 
-    private GameStateNetwork _lastState;
-
     public Dictionary<int, PlayerNetworkSync> Players => _players;
     public Dictionary<int, ToolNetworkSync> Tools => _tools;
     public List<BuildingNetworkSync> Buildings
@@ -43,66 +41,40 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        NetworkController.Instance.OnGameState += HandleGameState;
-    }
+        var player = Instantiate(_playerPrefab);
 
-    private void Update()
-    {
-        UpdateState();
-    }
+        BuildingNetworkSync buildData;
+        int x = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            buildData = Instantiate(_buildingPrefab);
+            int width = Random.Range(1, 4);
+            int height = Random.Range(1, 3);
+            buildData.Sync(new BuildingNetwork()
+            {
+                x = x,
+                width = width,
+                height = height,
+                color = "#ffcc00",
+                damage = 0,
+                plant = 0,
+                graffiti = 0,
+                maxDamage = 5,
+                maxPlant = 5,
+                people = 5,
+            });
+            x += width;
+        }
 
-    private void UpdateState()
-    {
-        if (_lastState == null) return;
-        foreach (var player in _lastState.players)
+        var toolData = Instantiate(_toolPrefab);
+        toolData.Sync(new ToolNetwork()
         {
-            PlayerNetworkSync playerData = null;
-            if (!_players.ContainsKey(player.id))
-            {
-                playerData = Instantiate(_playerPrefab);
-                _players.Add(player.id, playerData);
-            }
-            else
-            {
-                playerData = _players[player.id];
-            }
-            playerData.Sync(player);
-        }
-        
-        foreach (var building in _lastState.buildings)
-        {
-            BuildingNetworkSync buildingData = null;
-            if (!_buildings.ContainsKey(building.id))
-            {
-                buildingData = Instantiate(_buildingPrefab);
-                _buildings.Add(building.id, buildingData);
-            }
-            else
-            {
-                buildingData = _buildings[building.id];
-            }
-            buildingData.Sync(building);
-        }
-        
-        foreach (var tool in _lastState.tools)
-        {
-            ToolNetworkSync toolData = null;
-            if (!_tools.ContainsKey(tool.id))
-            {
-                toolData = Instantiate(_toolPrefab);
-                _tools.Add(tool.id, toolData);
-            }
-            else
-            {
-                toolData = _tools[tool.id];
-            }
-            toolData.Sync(tool);
-        }
-    }
-
-    private void HandleGameState(GameStateNetwork state)
-    {
-        _lastState = state;
+            x = 5,
+            y = 1,
+            type = (int)ToolSprite.Tool.Hammer,
+            uses = 5,
+            isHold = false
+        });
     }
 
     public BuildingNetworkSync GetBuilding(PlayerMovement movement)
